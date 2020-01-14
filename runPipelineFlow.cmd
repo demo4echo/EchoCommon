@@ -4,11 +4,9 @@ SET MARK_OFF_CLUSTER_INVOCATION_ENV_VAR="dc"
 
 REM CD /D "%~dp0"
 PUSHD "%~dp0"
-
-COPY .gradle\gradle.properties %userprofile%\.gradle\gradle.properties /Y
-
+COPY .gradle\gradle.properties %USERPROFILE%\.gradle\gradle.properties /Y
 POPD
 
-REM call gradlew.bat %* AIO
+CALL gradlew.bat %* AIO
 
-DEL %userprofile%\.gradle\gradle.properties
+DEL %USERPROFILE%\.gradle\gradle.properties
