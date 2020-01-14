@@ -8,9 +8,9 @@ SCRIPT=$(readlink -f "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
 cd "$SCRIPT_PATH"
-cp ./.gradle/gradle.properties $USER/.gradle/gradle.properties
+cp ./.gradle/gradle.properties $HOME/.gradle/gradle.properties
 cd -
 
 ./gradlew $# AIO
 
-rm $USER/.gradle/gradle.properties
+rm $HOME/.gradle/gradle.properties
