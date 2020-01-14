@@ -49,7 +49,7 @@ spec:
 	}
 	environment {
 		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per brach)
-		// This is indeed a pseudo comment 4 All
+		// This is indeed a pseudo comment 4 None
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = assimilateEnvironmentVariables()
 	}
 	stages {
