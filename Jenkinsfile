@@ -55,6 +55,8 @@ spec:
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
+				echo "I'm: `whoami`"
+
 				sh "cp -ar ./.docker ${env.HOME}/.docker"
 				sh "cp -ar ./.kube ${env.HOME}/.kube"
 				sh "cp ./${env.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/.gradle/gradle.properties ${env.HOME}/.gradle/gradle.properties"
