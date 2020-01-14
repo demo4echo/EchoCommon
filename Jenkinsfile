@@ -19,8 +19,9 @@ pipeline {
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
-				sh 'cp -ar ./.docker /root/.docker'
-				sh 'cp -ar ./.kube /root/.kube'
+				sh "cp -ar ./.docker ${env.HOME}/.docker"
+				sh "cp -ar ./.kube ${env.HOME}/.kube"
+				sh "cp ./${env.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/.gradle/gradle.properties ${env.HOME}/.gradle/gradle.properties"
 
 				script {
 					// Ensure target namespace is resolved
@@ -87,6 +88,10 @@ pipeline {
 	post {
 		always {
 			echo 'One way or another, I have finished'
+
+			// Do some cleanup
+			echo "The following file is going to be deleted: [${env.HOME}/.gradle/gradle.properties]"
+			sh "rm ${env.HOME}/.gradle/gradle.properties"
 		}
 		success {
 			echo 'I succeeeded!'
