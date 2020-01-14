@@ -7,9 +7,9 @@ SCRIPT=$(readlink -f "$0")
 # Absolute path this script is in, thus /home/user/bin
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
-pushd "$SCRIPT_PATH"
+cd "$SCRIPT_PATH"
 cp ./.gradle/gradle.properties $USER/.gradle/gradle.properties
-popd
+cd -
 
 ./gradlew $# AIO
 
