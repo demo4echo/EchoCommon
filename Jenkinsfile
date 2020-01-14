@@ -55,7 +55,7 @@ spec:
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
-				echo "I'm: `whoami`"
+				sh "echo I'm: `whoami`"
 
 				sh "cp -ar ./.docker ${env.HOME}/.docker"
 				sh "cp -ar ./.kube ${env.HOME}/.kube"
