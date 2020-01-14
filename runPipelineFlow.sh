@@ -11,7 +11,6 @@ cd "$SCRIPT_PATH"
 cp ./.gradle/gradle.properties $HOME/.gradle/gradle.properties
 cd -
 
-echo "Command is: [./gradlew $* AIO]"
 ./gradlew $* AIO
 
 rm $HOME/.gradle/gradle.properties
