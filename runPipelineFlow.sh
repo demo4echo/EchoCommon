@@ -11,6 +11,8 @@ cd "$SCRIPT_PATH"
 cp ./.gradle/gradle.properties $HOME/.gradle/gradle.properties
 cd -
 
-./gradlew $# AIO
+echo "tiran-$#"
+
+#./gradlew $# AIO
 
 rm $HOME/.gradle/gradle.properties
