@@ -4,8 +4,44 @@ pipeline {
 			cloud resolveCloudNameByBranchName()
 			label 'jenkins-slave-pod-agent'
 			defaultContainer 'jdk-gradle-docker-k8s-helm'
-			yamlFile 'Jenkinsfile.JenkinsSlaveManifest.yaml'
+//			yamlFile 'Jenkinsfile.JenkinsSlaveManifest.yaml'
 //			namespace resolveNamespaceByBranchName()
+			yaml """
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jenkins-slave
+  labels:
+    slave-agent: jenkins
+spec:
+  containers:
+  - name: jdk-gradle-docker-k8s-helm
+    image: demo4echo/alpine_openjdk8_k8scdk
+    imagePullPolicy: Always
+    command:
+    - cat
+    tty: true
+    env:
+    - name: CONTAINER_ENV_VAR
+      value: jdk-gradle-docker-k8s-helm  
+    volumeMounts:
+    - name: docker-socket
+      mountPath: /var/run/docker.sock
+    - name: gradle-cache-vol
+      mountPath: /root/.gradle
+    - name: helm-cache-vol
+      mountPath: /root/.helm
+  volumes:
+  - name: docker-socket
+    hostPath:
+      path: /var/run/docker.sock
+  - name: gradle-cache-vol
+    hostPath:
+      path: /root/.gradle
+  - name: helm-cache-vol
+    hostPath:
+      path: /root/.helm
+			"""
 		}
 	}
 	options { 
