@@ -58,6 +58,7 @@ spec:
 				sh "cp -ar ./${env.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/.docker /root/.docker"
 				sh "cp -ar ./${env.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/.kube /root/.kube"
 				sh "cp -ar ./${env.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/.gradle/gradle.properties /root/.gradle/gradle.properties"
+				sh "cp -ar ./${env.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/.gradle/init.gradle /root/.gradle/init.gradle"
 
 				script {
 					// Ensure target namespace is resolved

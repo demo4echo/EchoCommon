@@ -9,10 +9,12 @@ export MARK_OFF_CLUSTER_INVOCATION_ENV_VAR="dc"
 
 #cd "$SCRIPT_PATH"
 cp ./.gradle/gradle.properties $HOME/.gradle/gradle.properties
+cp ./.gradle/init.gradle $HOME/.gradle/init.gradle
 #cd -
 
 cd ..
 ./gradlew $*
 cd -
 
-rm $HOME/.gradle/gradle.properties
+#rm $HOME/.gradle/gradle.properties
+#rm $HOME/.gradle/init.gradle
