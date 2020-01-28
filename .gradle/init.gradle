@@ -1,2 +1,0 @@
-project.ext['reckon.scope'] = 'major' 
-project.ext['reckon.stage'] = 'milestone'
