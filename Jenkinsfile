@@ -51,6 +51,9 @@ spec:
 		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per brach)
 		// This is indeed a pseudo comment 4 None
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = assimilateEnvironmentVariables()
+
+		// Obtain the access token Jenkins uses to connect to GitHub
+		GITHUB_ACCESS_TOKEN = credentials('XXXXX')
 	}
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
@@ -66,17 +69,22 @@ spec:
 				}
 			}
 		}
-		stage('\u2777 build \u2728') {//\u1F6E0
+		stage('\u2777 stamp \u2728') {//\u1F6E0
+			steps {
+				sh "./gradlew publishVersion -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN}"
+			}
+		}
+		stage('\u2778 build \u2728') {//\u1F6E0
 			steps {
 				sh './gradlew dockerBuildAndPublish'
 			}
 		}
-		stage('\u2778 package \u2728') {//\u1F4E6
+		stage('\u2779 package \u2728') {//\u1F4E6
 			steps {
-				sh './gradlew helmPackage'
+				sh './gradlew helmPackage' // helmPackageAndPublish
 			}
 		}
-		stage('\u2779 install \u2728') {//\u1F3F4
+		stage('\u277A install \u2728') {//\u1F3F4
 			when {
 				environment name: 'CLOUD_NAME', value: 'development'
 			}
@@ -84,7 +92,7 @@ spec:
 				sh './gradlew helmUpdate'
 			}
 		}
-		stage('\u277A upgrade \u2728') {//\u1F3F4
+		stage('\u277B upgrade \u2728') {//\u1F3F4
 			when {
 				not {
 					environment name: 'CLOUD_NAME', value: 'development'
@@ -95,17 +103,17 @@ spec:
 				sh './gradlew helmUpdate'
 			}
 		}
-		stage('\u277B verify \u2728') {
+		stage('\u277C verify \u2728') {
 			steps {
 				sh './gradlew helmTestAndClean'
 			}
 		}
-		stage('\u277C certify \u2728') {//\u1F321
+		stage('\u277D certify \u2728') {//\u1F321
 			steps {
 				sh './gradlew certify'
 			}
 		}
-		stage('\u277D uninstall \u2728') {//\u1F3F3
+		stage('\u277E uninstall \u2728') {//\u1F3F3
 			when {
 				environment name: 'CLOUD_NAME', value: 'development'
 			}
@@ -113,7 +121,7 @@ spec:
 				sh './gradlew helmUninstall'
 			}
 		}
-		stage('\u277E cleanup \u2728') {
+		stage('\u277F cleanup \u2728') {
 			when {
 				environment name: 'CLOUD_NAME', value: 'development'
 			}

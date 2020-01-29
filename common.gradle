@@ -12,6 +12,10 @@ ext {
 	dockerFilePath = "./${-> envVarsProps.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/Dockerfile"
 }
 
+//
+// Versioning (must be the first plugin setup)
+//
+
 // Add this setion to avoid:
 // 	Could not evaluate onlyIf predicate for task ':reckonTagCreate'.
 // 	> java.lang.String cannot be cast to org.ajoberstar.reckon.gradle.ReckonPlugin$DelayedVersion
@@ -25,10 +29,6 @@ gradle.taskGraph.afterTask { Task task ->
 		project.version = originalProjectVersionObject.toString()
 	} 
 }
-
-//
-// Versioning (must be the first plugin setup)
-//
 
 // The Reckon plugin
 reckon {
@@ -48,13 +48,6 @@ ext.productVersion = manifestVersion()
 // Pre-Defined project properties
 project.description = 'The Echo Backend demo product'
 project.version = originalProjectVersionObject.toString()
-
-// In this section you declare where to find the dependencies of your project
-//repositories {
-//	// Use 'jcenter' for resolving your dependencies.
-//	// You can declare any Maven/Ivy/file repository here.
-//	jcenter()
-//}
 
 // Configure protobuf
 protobuf {
@@ -371,6 +364,10 @@ task gitPull {
 def obtainCurrentBranchName() {
 	return grgit.branch.current.name
 }
+
+//
+// General purpose functions
+//
 
 // Builds a proper version name
 def manifestVersion() {
