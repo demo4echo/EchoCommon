@@ -134,7 +134,7 @@ test {
 	systemProperties = System.properties
 
 	// Setup additional environment variables
-	environment.put("ECHOBE_SERVICE_ENDPOINT_NAMESPACE",manifestNamespace())
+//	environment.put("ECHOBE_SERVICE_ENDPOINT_NAMESPACE",manifestNamespace())
 
 	outputs.upToDateWhen {false}
 
