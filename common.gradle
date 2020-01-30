@@ -121,7 +121,14 @@ jar {
 	archiveClassifier=obtainCurrentBranchName()
 	
 	manifest {
-   		attributes "Main-Class": "com.efrat.example.devops.echoServerBEApp.EchoServerBEApp"
+   		attributes(
+            'Built-By'       : System.properties['user.name'],
+            'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+            'Build-Revision' : manifestVersion(),
+            'Created-By'     : "Gradle ${gradle.gradleVersion}",
+            'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+            'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
+			)
 	}
 
 	from {
