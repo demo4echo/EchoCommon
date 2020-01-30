@@ -226,12 +226,12 @@ helm {
 		values.put 'serviceNodePort',"${productExternalPort}"
 	}
 
-//	charts {
+	charts {
 //		echobe {
-	charts('echobe') {
+		main {
 			chartVersion = "${productVersion}"
 			sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
-//		}
+		}
 	}
 
 	lint {
@@ -242,8 +242,10 @@ helm {
 	}
 
 	releases {
-		echobe {
-			from charts.echobe
+//		echobe {
+//			from charts.echobe
+		main {
+			from charts.main
 
 			// Namespace to install the release into. Defaults to the current kube config namespace.
 			namespace = manifestNamespace()
