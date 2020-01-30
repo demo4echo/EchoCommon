@@ -244,7 +244,7 @@ helm {
 	releases {
 //		echobe {
 //			from charts.echobe
-		main {
+		chart('main').chartName {
 //			from charts.main
 			from chart('main')
 
