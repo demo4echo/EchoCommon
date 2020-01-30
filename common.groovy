@@ -34,5 +34,5 @@ def manifestNamespace() {
 ext {
 	obtainCurrentBranchName = this.&obtainCurrentBranchName
 	manifestVersion = this.&manifestVersion
-	manifestNamespace = this&manifestNamespace
+	manifestNamespace = this.&manifestNamespace
 }
