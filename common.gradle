@@ -226,11 +226,12 @@ helm {
 		values.put 'serviceNodePort',"${productExternalPort}"
 	}
 
-	charts {
-		echobe {
+//	charts {
+//		echobe {
+	charts('echobe') {
 			chartVersion = "${productVersion}"
 			sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
-		}
+//		}
 	}
 
 	lint {
