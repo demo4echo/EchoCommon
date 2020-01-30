@@ -130,7 +130,7 @@ test {
 	systemProperties = System.properties
 
 	// Setup additional environment variables
-	environment.put("ECHOBE_SERVICE_ENDPOINT_NAMESPACE",manifestNamespace())
+//	environment.put("ECHOBE_SERVICE_ENDPOINT_NAMESPACE",manifestNamespace())
 
 	outputs.upToDateWhen {false}
 
@@ -227,6 +227,7 @@ helm {
 		values.put 'serviceNodePort',"${productExternalPort}"
 	}
 
+	// The Charts section
 	helm.charts.main.chartName = productName
 	helm.charts.main.chartVersion = productVersion
 	helm.charts.main.sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
