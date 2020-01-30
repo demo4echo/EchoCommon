@@ -229,6 +229,7 @@ helm {
 	charts {
 //		echobe {
 		main {
+			chartName = 'echobe'
 			chartVersion = "${productVersion}"
 			sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
 		}
