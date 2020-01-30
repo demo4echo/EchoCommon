@@ -240,7 +240,7 @@ helm {
 		// treat linter warnings as errors (failing the build)
 		strict = true
 	}
-
+/**
 	releases {
 //		echobe {
 //			from charts.echobe
@@ -267,7 +267,7 @@ helm {
 			wait = true
 		}		
 	}
-
+*/
 //	publishing {
 //		repositories {
 //			chartMuseum('outboundEchoCharts') {
@@ -281,6 +281,11 @@ helm {
 helm.charts.main.chartName = 'echobe' // not needed
 helm.charts.main.chartVersion = "${productVersion}"
 helm.charts.main.sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
+
+helm.releases.main.from = chart('main')
+helm.releases.main.namespace = manifestNamespace()
+helm.releases.main.purge = true
+helm.releases.main.wait = true
 
 task helmUpdate(dependsOn: 'helmInstall')
 task helmUninstall(dependsOn: 'helmDelete')
