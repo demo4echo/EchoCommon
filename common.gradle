@@ -1,5 +1,4 @@
 // Load common functions
-//apply from: "./${-> envVarsProps.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/common.groovy"
 apply from: "./${-> commonSubModuleName}/common.groovy"
 
 // Load environment variables
