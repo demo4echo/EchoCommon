@@ -5,6 +5,7 @@ file("EnvFile.properties").withInputStream { envVarsProps.load(it) }
 // Adding some properties
 ext {
 	serviceName = envVarsProps.SERVICE_NAME_ENV_VAR
+	productName = "${project.name}"
 	productRepository = "${serviceName}/${productName}"
 	productK8ShelmChartsFolder = "k8s/helm/charts"
 	productionBranchName = envVarsProps.PRODUCTION_BRANCH_NAME_ENV_VAR
@@ -196,10 +197,6 @@ task dockerStart(dependsOn: ['dockerBuild','dockerRun'])
 // helm
 //
 
-helm.charts.main.chartName = 'echobe' // not needed
-helm.charts.main.chartVersion = "${productVersion}"
-helm.charts.main.sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
-
 helm {
 	home = file("${System.properties['user.home']}${File.separator}.helm")
 	debug = true
@@ -230,13 +227,9 @@ helm {
 		values.put 'serviceNodePort',"${productExternalPort}"
 	}
 
-//	charts {
-//		echobe {
-//			chartName = 'echobe'
-//			chartVersion = "${productVersion}"
-//			sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
-//		}
-//	}
+	helm.charts.main.chartName = productName
+	helm.charts.main.chartVersion = productVersion
+	helm.charts.main.sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
 
 	lint {
 		// enable/disable linting by default
@@ -245,17 +238,8 @@ helm {
 		strict = true
 	}
 
-	//helm.releases.main.from = chart('main')
-	//helm.releases.main.namespace = manifestNamespace()
-	//helm.releases.main.purge = true
-	//helm.releases.main.wait = true
-
-
 	releases {
-//		echobe {
-//			from charts.echobe
-		'echobe' {
-//			from charts.main
+		"${productName}" {
 			from chart('main')
 
 			// Namespace to install the release into. Defaults to the current kube config namespace.
