@@ -71,17 +71,17 @@ spec:
 		}
 		stage('\u2777 stamp \u2728') {//\u1F6E0
 			steps {
-				sh "./gradlew publishVersion -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN}"
+				echo 'Will be done at the end of the build!'
 			}
 		}
 		stage('\u2778 build \u2728') {//\u1F6E0
 			steps {
-				sh './gradlew dockerBuildAndPublish'
+				sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} dockerBuildAndPublish"
 			}
 		}
 		stage('\u2779 package \u2728') {//\u1F4E6
 			steps {
-				sh './gradlew helmPackage' // helmPackageAndPublish
+				sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} helmPackage" // helmPackageAndPublish
 			}
 		}
 		stage('\u277A install \u2728') {//\u1F3F4
@@ -89,7 +89,7 @@ spec:
 				environment name: 'CLOUD_NAME', value: 'development'
 			}
 			steps {
-				sh './gradlew helmUpdate'
+				sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} helmUpdate"
 			}
 		}
 		stage('\u277B upgrade \u2728') {//\u1F3F4
@@ -99,18 +99,18 @@ spec:
 				}
 			}
 			steps {
-				sh './gradlew helmUninstall'
-				sh './gradlew helmUpdate'
+				sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} helmUninstall"
+				sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} helmUpdate"
 			}
 		}
 		stage('\u277C verify \u2728') {
 			steps {
-				sh './gradlew helmTestAndClean'
+				sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} helmTestAndClean"
 			}
 		}
 		stage('\u277D certify \u2728') {//\u1F321
 			steps {
-				sh './gradlew certify'
+				sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} certify"
 			}
 		}
 		stage('\u277E uninstall \u2728') {//\u1F3F3
@@ -118,7 +118,7 @@ spec:
 				environment name: 'CLOUD_NAME', value: 'development'
 			}
 			steps {
-				sh './gradlew helmUninstall'
+				sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} helmUninstall"
 			}
 		}
 		stage('\u277F cleanup \u2728') {
@@ -134,8 +134,12 @@ spec:
 		always {
 			echo 'One way or another, I have finished'
 
+			// Mark the version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
+			sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
+
 			// Do some cleanup
-			sh "rm /root/.gradle/gradle.properties"
+//			sh "rm /root/.gradle/gradle.properties"
+//			sh "rm /root/.gradle/init.gradle"
 		}
 		success {
 			echo 'I succeeeded!'
