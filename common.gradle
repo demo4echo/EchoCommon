@@ -1,10 +1,16 @@
+plugins
+{
+	// taskTree plugin
+	id 'com.dorongold.task-tree' version "${plugin_com_dorongold_task_tree_version}"
+}
+
+// Load common functions
+//apply from: "./${-> envVarsProps.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/common.groovy"
+apply from: "./${-> commonSubModuleName}/common.groovy"
 
 // Load environment variables
 def envVarsProps = new Properties()
 file("EnvFile.properties").withInputStream { envVarsProps.load(it) }
-
-// Load common functions
-apply from: "./${-> envVarsProps.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/common.groovy"
 
 // Adding some properties
 ext {
