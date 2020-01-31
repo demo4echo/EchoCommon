@@ -29,14 +29,10 @@ def manifestNamespace() {
 	
 	return namespace
 }
-/**
+
 // Export methods by turning them into closures
 ext {
 	obtainCurrentBranchName = this.&obtainCurrentBranchName
 	manifestVersion = this.&manifestVersion
 	manifestNamespace = this.&manifestNamespace
 }
-*/
-
-// Return this to allow direct invocation of the methods/functions in this file
-return this
