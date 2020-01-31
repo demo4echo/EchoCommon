@@ -45,7 +45,7 @@ spec:
 		}
 	}
 	parameters {
-		string(name: 'TARGET_JENKINS_FILE', defaultValue: 'Jenkinsfile', description: 'The desired Jenkinsfile to run')
+		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: 'Jenkinsfile', description: 'The desired Jenkinsfile to run')
 
 //		text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
 
