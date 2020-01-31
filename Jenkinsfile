@@ -251,7 +251,7 @@ def assimilateEnvironmentVariables() {
 //
 // Locate sub module folder name
 //
-def locateCommonSubModuleFolderName {
+def locateCommonSubModuleFolderName() {
 	def final COMMON_SUB_MODULE_MARKER_FILE_NAME = "_CommonSubModulePickup.markup"
 	def commonSubModuleName
 	def baseDir = new File('.')
