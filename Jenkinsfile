@@ -58,10 +58,10 @@ spec:
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
-				sh "cp -ar ./${env.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/.docker /root/.docker"
-				sh "cp -ar ./${env.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/.kube /root/.kube"
-				sh "cp -ar ./${env.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/.gradle/gradle.properties /root/.gradle/gradle.properties"
-				sh "cp -ar ./${env.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}/.gradle/init.gradle /root/.gradle/init.gradle"
+				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.docker /root/.docker"
+				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.kube /root/.kube"
+				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.gradle/gradle.properties /root/.gradle/gradle.properties"
+				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.gradle/init.gradle /root/.gradle/init.gradle"
 
 				script {
 					// Ensure target namespace is resolved
@@ -227,8 +227,33 @@ def assimilateEnvironmentVariables() {
 		}
 		
 		println "JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME value is: [${env.JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME}]"
-		println "JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME value is: [${env.JENKINS_SLAVE_K8S_COMMON_SUB_MODULE_NAME}]"
+		
+		// Manifest common sub module folder name
+		def commonSubModuleFolderName = locateCommonSubModuleFolderName()
+		env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR = commonSubModuleFolderName
+		println "COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR value is: [${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}]"
 
 		return env.JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME
 //	}
+}
+
+//
+// Locate sub module folder name
+//
+def locateCommonSubModuleFolderName {
+	def final COMMON_SUB_MODULE_MARKER_FILE_NAME = "_CommonSubModulePickup.markup"
+	def commonSubModuleName
+	def baseDir = new File('.')
+
+	// Traverse the sub folders of the current folder
+	baseDir.eachDir {
+		def targetFilePath = "." + File.separator + it.name + File.separator + COMMON_SUB_MODULE_MARKER_FILE_NAME
+		def currentFile = new File(targetFilePath)
+		
+		if (currentFile.exists() == true) {
+			commonSubModuleName = it.name 
+		}
+	}
+
+	return commonSubModuleName	
 }
