@@ -1,5 +1,5 @@
 // Load common functions
-apply from: "./${-> commonSubModuleName}/common.groovy"
+apply from: "${-> commonSubModuleName}${File.separator}common.groovy"
 
 // Load environment variables
 def envVarsProps = new Properties()
@@ -10,10 +10,10 @@ ext {
 	serviceName = envVarsProps.SERVICE_NAME_ENV_VAR
 	productName = "${project.name}"
 	productRepository = "${serviceName}/${productName}"
-	productK8ShelmChartsFolder = "k8s/helm/charts"
+	productK8ShelmChartsFolder = "k8s${File.separator}helm${File.separator}charts"
 	productionBranchName = envVarsProps.PRODUCTION_BRANCH_NAME_ENV_VAR
 	stagingBranchName = envVarsProps.STAGING_BRANCH_NAME_ENV_VAR
-	dockerFilePath = "./${-> commonSubModuleName}/Dockerfile"
+	dockerFilePath = "${-> commonSubModuleName}${File.separator}Dockerfile"
 }
 
 //
@@ -238,14 +238,14 @@ helm {
 		"${productName}" {
 //			chartName = productName
 			chartVersion = productVersion
-			sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
+			sourceDir = file("${productK8ShelmChartsFolder}${File.separator}${productName}")
 		}
 	}
 
 	// The "charts" section (above) can also be defined using a pre-defined default chart named 'main' 
 //	helm.charts.main.chartName = productName
 //	helm.charts.main.chartVersion = productVersion
-//	helm.charts.main.sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
+//	helm.charts.main.sourceDir = file("${productK8ShelmChartsFolder}${File.separator}${productName}")
 
 	lint {
 		// enable/disable linting by default
