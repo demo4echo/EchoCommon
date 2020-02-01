@@ -208,9 +208,6 @@ helm {
 	home = file("${System.properties['user.home']}${File.separator}.helm")
 	debug = true
 
-	//  If set, installation process purges chart on fail, also sets --wait flag
-	automic = true
-
 //	repositories {
 //		inboundEchoCharts {
 //			url = uri(helmChartsPublishingReposChartMuseumUrl)
@@ -281,7 +278,7 @@ helm {
 //			wait = true
 
 			//  If set, installation process purges chart on fail, also sets --wait flag
-//			automic = true
+			atomic = true
 		}		
 	}
 
