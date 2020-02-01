@@ -234,10 +234,18 @@ helm {
 		values.put 'serviceNodePort',"${productExternalPort}"
 	}
 
-	// The Charts section
+	// The Charts section when using a pre-defined default chart named 'main' 
 	helm.charts.main.chartName = productName
 	helm.charts.main.chartVersion = productVersion
 	helm.charts.main.sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
+
+	charts {
+		"${productName}" {
+//			chartName = productName
+			chartVersion = productVersion
+			sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
+		}
+	}
 
 	lint {
 		// enable/disable linting by default
@@ -248,7 +256,8 @@ helm {
 
 	releases {
 		"${productName}" {
-			from chart('main')
+//			from chart('main')
+			from chart("${productName}")
 
 			// Namespace to install the release into. Defaults to the current kube config namespace.
 			namespace = manifestNamespace()
