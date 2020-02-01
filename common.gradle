@@ -235,9 +235,9 @@ helm {
 	}
 
 	// The Charts section when using a pre-defined default chart named 'main' 
-	helm.charts.main.chartName = productName
-	helm.charts.main.chartVersion = productVersion
-	helm.charts.main.sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
+//	helm.charts.main.chartName = productName
+//	helm.charts.main.chartVersion = productVersion
+//	helm.charts.main.sourceDir = file("${productK8ShelmChartsFolder}/${productName}")
 
 	charts {
 		"${productName}" {
