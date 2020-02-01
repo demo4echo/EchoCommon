@@ -275,7 +275,10 @@ helm {
 //			values = ['image.tag':"${productVersion}"]
 
 			// If true, will wait until all Pods, PVCs, Services, and minimum number of Pods of a Deployment are in a ready state before marking the release as successful
-			wait = true
+//			wait = true
+
+			//  If set, installation process purges chart on fail, also sets --wait flag
+			automic = true
 		}		
 	}
 
