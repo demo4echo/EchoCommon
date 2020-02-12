@@ -22,7 +22,7 @@ def manifestVersion() {
 def manifestNamespace() {
 	def namespace = obtainCurrentBranchName()
 
-	// If we are on the production or staging branches return the regular name ($serviceName), else return the branch namne itself
+	// If we are on the production or staging branches return the regular name ($serviceName), else return the branch name itself
 	if (namespace == "${productionBranchName}" || namespace == "${stagingBranchName}") {
 		namespace = serviceName
 	}
