@@ -56,8 +56,8 @@ project.version = originalProjectVersionObject.toString()
 // Configure protobuf
 protobuf {
 	protoc { 
-   	artifact = "com.google.protobuf:protoc:${dep_protoc_version}" 
-   }
+		artifact = "com.google.protobuf:protoc:${dep_protoc_version}" 
+	}
 	plugins {
 		grpc { 
 			artifact = "io.grpc:protoc-gen-grpc-java:${dep_grpc_version}" 
@@ -110,8 +110,8 @@ tasks.eclipse.dependsOn << {
 		def resourceDir = new File(project.projectDir, sourceFolder)
 		
 		if (!resourceDir.exists() && !resourceDir.mkdirs()) {
-    		logger.info("Not able to create %1",resourceDir);
-    	}
+			logger.info("Not able to create %1",resourceDir);
+		}
 	}
 }
 
@@ -120,13 +120,13 @@ jar {
 	archiveClassifier=obtainCurrentBranchName()
 	
 	manifest {
-   		attributes(
-            'Built-By'       : System.properties['user.name'],
-            'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
-            'Build-Revision' : manifestVersion(),
-            'Created-By'     : "Gradle ${gradle.gradleVersion}",
-            'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
-            'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
+			attributes(
+				'Built-By'       : System.properties['user.name'],
+				'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+				'Build-Revision' : manifestVersion(),
+				'Created-By'     : "Gradle ${gradle.gradleVersion}",
+				'Build-Jdk'      : "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+				'Build-OS'       : "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
 			)
 	}
 
