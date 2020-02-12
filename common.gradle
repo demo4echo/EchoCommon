@@ -50,7 +50,7 @@ ext.originalProjectVersionObject = project.version
 ext.productVersion = manifestVersion()
 
 // Pre-Defined project properties
-project.description = 'The Echo Backend demo product'
+//project.description = 'The Echo demo product'
 project.version = originalProjectVersionObject.toString()
 
 // Configure protobuf
