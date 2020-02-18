@@ -8,13 +8,15 @@ file("EnvFile.properties").withInputStream { envVarsProps.load(it) }
 // Adding some properties
 ext {
 	serviceName = envVarsProps.SERVICE_NAME_ENV_VAR
-	productName = "${project.name}"
+	productName = envVarsProps.PRODUCT_NAME_ENV_VAR
 	productRepository = "${serviceName}/${productName}"
 	productK8ShelmChartsFolder = "k8s${File.separator}helm${File.separator}charts"
 	productionBranchName = envVarsProps.PRODUCTION_BRANCH_NAME_ENV_VAR
 	stagingBranchName = envVarsProps.STAGING_BRANCH_NAME_ENV_VAR
 	dockerFilePath = "${-> commonSubModuleName}${File.separator}Dockerfile"
 }
+
+// Note: we can't use "${project.name}" for the productName as this name is not fixed and changes at will!
 
 //
 // Versioning (must be the first plugin setup)
@@ -175,7 +177,7 @@ docker {
 	name "${productName}:${productVersion}"
 	tag "privateRegistry", "${productRepository}:${productVersion}"	// For DockerHub registry
 	dockerfile file(dockerFilePath)
-	buildArgs([JAR_PRODUCT_NAME:"${project.name}",JAR_PRODUCT_VERSION:"${productVersion}"])
+	buildArgs([JAR_PRODUCT_NAME:"${productName}",JAR_PRODUCT_VERSION:"${productVersion}"])
 	files jar.outputs
 	copySpec.into(buildDir.getName() + "/libs")
 //	pull true
