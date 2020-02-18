@@ -14,6 +14,7 @@ metadata:
   labels:
     slave-agent: jenkins
 spec:
+  dnsPolicy: ClusterFirst
   containers:
   - name: jdk-gradle-docker-k8s-helm
     image: demo4echo/alpine_openjdk8_k8scdk
