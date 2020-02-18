@@ -14,7 +14,6 @@ metadata:
   labels:
     slave-agent: jenkins
 spec:
-  dnsPolicy: ClusterFirst
   containers:
   - name: jdk-gradle-docker-k8s-helm
     image: demo4echo/alpine_openjdk8_k8scdk
@@ -24,7 +23,7 @@ spec:
     tty: true
     env:
     - name: CONTAINER_ENV_VAR
-      value: jdk-gradle-docker-k8s-helm  
+      value: jdk-gradle-docker-k8s-helm-tiran
     volumeMounts:
     - name: docker-socket
       mountPath: /var/run/docker.sock
