@@ -64,7 +64,7 @@ spec:
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = assimilateEnvironmentVariables()
 
 		// Obtain the access token Jenkins uses to connect to GitHub
-		GITHUB_ACCESS_TOKEN = credentials("${env.JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME}")
+//		GITHUB_ACCESS_TOKEN = credentials("${env.JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME}")
 	}
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
