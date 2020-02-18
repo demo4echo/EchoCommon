@@ -243,13 +243,36 @@ def assimilateEnvironmentVariables() {
 		println "JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME value is: [${env.JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME}]"
 
 		// Manifest common sub module folder name
-		def markupFiles = findFiles(glob: '**/_CommonSubModulePickup.markup')
-		def commonSubModuleFolderName = ${markupFiles[0].directory}
-				
-//		def commonSubModuleFolderName = locateCommonSubModuleFolderName()
+		def commonSubModuleFolderName = locateCommonSubModuleFolderName()
 		env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR = commonSubModuleFolderName
 		println "COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR value is: [${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}]"
 
 		return env.JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME
 //	}
+}
+
+//
+// Locate sub module folder name
+//
+def locateCommonSubModuleFolderName() {
+	def markupFiles = findFiles(glob: '**/_CommonSubModulePickup.markup')
+	def commonSubModuleFolderName = "${markupFiles[0].directory}"
+	def commonSubModuleName = commonSubModuleFolderName
+
+	println "The directory name is: [${commonSubModuleFolderName}]"
+
+/**
+	def baseDir = new File('.')
+
+	// Traverse the sub folders of the current folder
+	baseDir.eachDir {
+		def targetFilePath = "." + File.separator + it.name + File.separator + COMMON_SUB_MODULE_MARKER_FILE_NAME
+		def currentFile = new File(targetFilePath)
+		
+		if (currentFile.exists() == true) {
+			commonSubModuleName = it.name
+		}
+	}
+*/
+	return commonSubModuleName
 }
