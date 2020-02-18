@@ -23,7 +23,7 @@ spec:
     tty: true
     env:
     - name: CONTAINER_ENV_VAR
-      value: jdk-gradle-docker-k8s-helm-tiran
+      value: jdk-gradle-docker-k8s-helm
     volumeMounts:
     - name: docker-socket
       mountPath: /var/run/docker.sock
@@ -238,7 +238,10 @@ def assimilateEnvironmentVariables() {
 		}
 		
 		println "JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME value is: [${env.JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME}]"
-		
+		println "JENKINS_SLAVE_K8S_RECKON_SCOPE value is: [${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}]"
+		println "JENKINS_SLAVE_K8S_RECKON_STAGE value is: [${env.JENKINS_SLAVE_K8S_RECKON_STAGE}]"
+		println "JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME value is: [${env.JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME}]"
+
 		// Manifest common sub module folder name
 		def commonSubModuleFolderName = locateCommonSubModuleFolderName()
 		env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR = commonSubModuleFolderName
@@ -262,9 +265,9 @@ def locateCommonSubModuleFolderName() {
 		def currentFile = new File(targetFilePath)
 		
 		if (currentFile.exists() == true) {
-			commonSubModuleName = it.name 
+			commonSubModuleName = it.name
 		}
 	}
 
-	return commonSubModuleName	
+	return commonSubModuleName
 }
