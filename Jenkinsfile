@@ -260,10 +260,6 @@ def locateCommonSubModuleFolderName() {
 	def (commonSubModuleFolderName,commonSubModulePickupFileName) = commonSubModuleMarkupFileRelativePath.tokenize('/')
 	def commonSubModuleName = commonSubModuleFolderName
 
-	println "The directory name is: [${commonSubModuleFolderName}]"
-	println "The markup file name is: [${commonSubModulePickupFileName}]"
-	println "The commonSubModuleName is: [${commonSubModuleName}]"
-
 /**
 	def baseDir = new File('.')
 
