@@ -69,6 +69,8 @@ spec:
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
+				echo "Current user is: [`whoami`]"
+
 				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.docker /root/.docker"
 				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.kube /root/.kube"
 				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.gradle/gradle.properties /root/.gradle/gradle.properties"
