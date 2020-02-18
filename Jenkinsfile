@@ -257,7 +257,7 @@ def assimilateEnvironmentVariables() {
 def locateCommonSubModuleFolderName() {
 	def markupFiles = findFiles(glob: '**/_CommonSubModulePickup.markup')
 	def commonSubModuleMarkupFileRelativePath = "${markupFiles[0].path}"
-	def (commonSubModuleFolderName,commonSubModulePickupFileName) = commonSubModuleMarkupFileRelativePath.tokenize(File.separator)
+	def (commonSubModuleFolderName,commonSubModulePickupFileName) = commonSubModuleMarkupFileRelativePath.tokenize('/')
 	def commonSubModuleName = commonSubModuleFolderName
 
 	println "The directory name is: [${commonSubModuleFolderName}]"
