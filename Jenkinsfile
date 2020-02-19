@@ -1,3 +1,7 @@
+//@Library('EchoSharedLibrary@$BRANCH_NAME') _
+
+def jenkinsSlavePodManifestAsString = libraryResource 'jenkinsSlavePodManifest.yaml'
+
 pipeline {
 	agent {
 		kubernetes {
@@ -6,7 +10,8 @@ pipeline {
 			defaultContainer 'jdk-gradle-docker-k8s-helm'
 //			yamlFile 'Jenkinsfile.JenkinsSlaveManifest.yaml'
 //			namespace resolveNamespaceByBranchName()
-			yaml """
+			yaml jenkinsSlavePodManifestAsString
+/**			yaml """
 apiVersion: v1
 kind: Pod
 metadata:
@@ -41,7 +46,7 @@ spec:
   - name: helm-cache-vol
     hostPath:
       path: /root/.helm
-"""
+"""*/
 		}
 	}
 	options { 
