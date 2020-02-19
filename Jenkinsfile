@@ -69,7 +69,7 @@ spec:
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
-				echo "I am user: [`whoami`]"
+				sh 'whoami'
 
 				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.docker /root/.docker"
 				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.kube /root/.kube"
@@ -258,7 +258,7 @@ def assimilateEnvironmentVariables() {
 //
 def locateCommonSubModuleFolderName() {
 	def markupFiles = findFiles(glob: '**/_CommonSubModulePickup.markup')
-	def commonSubModuleMarkupFileRelativePath = "${markupFiles[0].path}"
+	def commonSubModuleMarkupFileRelativePath = markupFiles[0].path
 	def (commonSubModuleFolderName,commonSubModulePickupFileName) = commonSubModuleMarkupFileRelativePath.tokenize('/')
 	def commonSubModuleName = commonSubModuleFolderName
 
