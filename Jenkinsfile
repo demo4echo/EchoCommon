@@ -1,52 +1,24 @@
-//@Library('EchoSharedLibrary@$BRANCH_NAME') _
+// We can omit this one as we marked the shared library to load implicitly
+@Library('EchoSharedLibrary@$BRANCH_NAME') _
 
-def jenkinsSlavePodManifestAsString = libraryResource 'jenkinsSlavePodManifest.yaml'
+// Load shared resources
+def jenkinsSlavePodManifestResourceAsString = libraryResource 'jenkinsSlavePodManifest.yaml'
 
 pipeline {
 	agent {
 		kubernetes {
-			cloud resolveCloudNameByBranchName()
+//			cloud resolveCloudNameByBranchName()
+			cloud pipelineCommon.resolveCloudNameByBranchName()
 			label 'jenkins-slave-pod-agent'
 			defaultContainer 'jdk-gradle-docker-k8s-helm'
 //			yamlFile 'Jenkinsfile.JenkinsSlaveManifest.yaml'
 //			namespace resolveNamespaceByBranchName()
-			yaml jenkinsSlavePodManifestAsString
-/**			yaml """
-apiVersion: v1
-kind: Pod
-metadata:
-  name: jenkins-slave
-  labels:
-    slave-agent: jenkins
-spec:
-  containers:
-  - name: jdk-gradle-docker-k8s-helm
-    image: demo4echo/alpine_openjdk8_k8scdk
-    imagePullPolicy: Always
-    command:
-    - cat
-    tty: true
-    env:
-    - name: CONTAINER_ENV_VAR
-      value: jdk-gradle-docker-k8s-helm
-    volumeMounts:
-    - name: docker-socket
-      mountPath: /var/run/docker.sock
-    - name: gradle-cache-vol
-      mountPath: /root/.gradle
-    - name: helm-cache-vol
-      mountPath: /root/.helm
-  volumes:
-  - name: docker-socket
-    hostPath:
-      path: /var/run/docker.sock
-  - name: gradle-cache-vol
-    hostPath:
-      path: /root/.gradle
-  - name: helm-cache-vol
-    hostPath:
-      path: /root/.helm
-"""*/
+			yaml jenkinsSlavePodManifestResourceAsString
+/**
+			yaml """
+...
+"""
+*/
 		}
 	}
 	options { 
@@ -295,6 +267,7 @@ def locateCommonSubModuleFolderName() {
 	println "Within locateCommonSubModuleFolderName() => Jenkins node name is: [${env.NODE_NAME}]"
 
 	def markupFiles = findFiles(glob: '**/_CommonSubModulePickup.markup')
+
 	def commonSubModuleMarkupFileRelativePath = markupFiles[0].path
 	def (commonSubModuleFolderName,commonSubModulePickupFileName) = commonSubModuleMarkupFileRelativePath.tokenize('/')
 	def commonSubModuleName = commonSubModuleFolderName
