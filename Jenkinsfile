@@ -60,6 +60,8 @@ spec:
 	parameters {
 		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: 'Jenkinsfile', description: 'The desired Jenkinsfile to run')
 
+		string(name: 'TARGET_RECKON_SCOPE', defaultValue: "${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}", description: 'The desired reckon scope to use in the build')
+
 //		text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
 
 //		booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
@@ -72,6 +74,8 @@ spec:
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
 				sh 'whoami'
+
+				sh "echo 'The reckon scope is ${params.TARGET_RECKON_SCOPE}'"
 
 				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.docker /root/.docker"
 				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.kube /root/.kube"
