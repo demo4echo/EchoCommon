@@ -54,6 +54,8 @@ spec:
 
 		string(name: 'TARGET_RECKON_SCOPE', defaultValue: 'NA', description: 'The desired reckon scope to use in the build')
 
+		string(name: 'TARGET_RECKON_STAGE', defaultValue: 'NA', description: 'The desired reckon stage to use in the build')
+
 //		text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
 
 //		booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
@@ -161,7 +163,7 @@ spec:
 			echo 'I succeeeded!'
 
 			// Mark the version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
-			sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
+//			sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
 
 			// Collect JUnit test results
 			junit 'build/test-results/**/*.xml'
@@ -251,6 +253,10 @@ def assimilateEnvironmentVariables() {
 		if (params.TARGET_RECKON_SCOPE != 'NA')
 		{
 			env.JENKINS_SLAVE_K8S_RECKON_SCOPE = params.TARGET_RECKON_SCOPE
+		}
+		if (params.TARGET_RECKON_STAGE != 'NA')
+		{
+			env.JENKINS_SLAVE_K8S_RECKON_STAGE = params.TARGET_RECKON_STAGE
 		}
 
 		println "JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME value is: [${env.JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME}]"
