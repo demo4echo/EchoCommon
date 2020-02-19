@@ -54,8 +54,7 @@ spec:
 		// This is indeed a pseudo comment 4 None
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = assimilateEnvironmentVariables()
 
-		// Obtain the access token Jenkins uses to connect to GitHub
-//		GITHUB_ACCESS_TOKEN = credentials("${env.JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME}")
+		// Obtain the access token Jenkins uses to connect to GitHub (using a Jenkins credentials ID)
 		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
 	}
 	parameters {
@@ -183,7 +182,7 @@ def resolveCloudNameByBranchName() {
 	node {
 //	node(env.NODE_NAME) {
 //	node('master') {
-		println "Within resolveCloudNameByBranchName() => Node name is: [${env.NODE_NAME}]"
+		println "Within resolveCloudNameByBranchName() => Jenkins node name is: [${env.NODE_NAME}]"
 
 		println "Branch name is: [${env.BRANCH_NAME}]"
 
@@ -237,7 +236,7 @@ def assimilateEnvironmentVariables() {
 //	node(env.NODE_NAME) {
 //		checkout(scm) => don't need it as we'll call the function after the repository has been fetched (checkout(scm) is called in the 'agent' phase)
 
-		println "Within assimilateEnvironmentVariables() => Node name is: [${env.NODE_NAME}]"
+		println "Within assimilateEnvironmentVariables() => Jenkins node name is: [${env.NODE_NAME}]"
 
 		def selfProps = readProperties interpolate: true, file: 'EnvFile.properties'
 		selfProps.each {
@@ -262,6 +261,8 @@ def assimilateEnvironmentVariables() {
 // Locate sub module folder name
 //
 def locateCommonSubModuleFolderName() {
+	println "Within locateCommonSubModuleFolderName() => Jenkins node name is: [${env.NODE_NAME}]"
+
 	def markupFiles = findFiles(glob: '**/_CommonSubModulePickup.markup')
 	def commonSubModuleMarkupFileRelativePath = markupFiles[0].path
 	def (commonSubModuleFolderName,commonSubModulePickupFileName) = commonSubModuleMarkupFileRelativePath.tokenize('/')
