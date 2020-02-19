@@ -64,7 +64,7 @@ spec:
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = assimilateEnvironmentVariables()
 
 		// Obtain the access token Jenkins uses to connect to GitHub
-//		GITHUB_ACCESS_TOKEN = credentials("${env.JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME}")
+		GITHUB_ACCESS_TOKEN = credentials("${env.JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME}")
 	}
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
@@ -148,7 +148,7 @@ spec:
 			echo 'One way or another, I have finished'
 
 			// Mark the version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
-//			sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
+			sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
 
 			// Do some cleanup
 //			sh "rm /root/.gradle/gradle.properties"
