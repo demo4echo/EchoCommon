@@ -49,18 +49,10 @@ spec:
 		
 		buildDiscarder(logRotator(numToKeepStr: '25'))
 	}
-	environment {
-		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per brach)
-		// This is indeed a pseudo comment 4 None
-		X_EFRAT_ECHO_DUMMY_ENV_VAR = assimilateEnvironmentVariables()
-
-		// Obtain the access token Jenkins uses to connect to GitHub (using a Jenkins credentials ID)
-		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
-	}
 	parameters {
 		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: 'Jenkinsfile', description: 'The desired Jenkinsfile to run')
 
-		string(name: 'TARGET_RECKON_SCOPE', defaultValue: "${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}", description: 'The desired reckon scope to use in the build')
+		string(name: 'TARGET_RECKON_SCOPE', defaultValue: 'NA', description: 'The desired reckon scope to use in the build')
 
 //		text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
 
@@ -70,6 +62,14 @@ spec:
 
 //		password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
 	}	
+	environment {
+		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per brach)
+		// This is indeed a pseudo comment 4 None
+		X_EFRAT_ECHO_DUMMY_ENV_VAR = assimilateEnvironmentVariables()
+
+		// Obtain the access token Jenkins uses to connect to GitHub (using a Jenkins credentials ID)
+		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
+	}
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
@@ -247,10 +247,15 @@ def assimilateEnvironmentVariables() {
 			key,value -> env."${key}" = "${value}" 
 		}
 		
+		// Overwrite the reckon scope and stage designated values if applicable values were passed as parameters
+		if (params.TARGET_RECKON_SCOPE != 'NA')
+		{
+			env.JENKINS_SLAVE_K8S_RECKON_SCOPE = params.TARGET_RECKON_SCOPE
+		}
+
 		println "JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME value is: [${env.JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME}]"
 		println "JENKINS_SLAVE_K8S_RECKON_SCOPE value is: [${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}]"
 		println "JENKINS_SLAVE_K8S_RECKON_STAGE value is: [${env.JENKINS_SLAVE_K8S_RECKON_STAGE}]"
-		println "JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME value is: [${env.JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME}]"
 
 		// Manifest common sub module folder name
 		def commonSubModuleFolderName = locateCommonSubModuleFolderName()
