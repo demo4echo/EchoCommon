@@ -77,8 +77,6 @@ spec:
 			steps {
 				sh 'whoami'
 
-				sh "echo 'The reckon scope is ${params.TARGET_RECKON_SCOPE}'"
-
 				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.docker /root/.docker"
 				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.kube /root/.kube"
 				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.gradle/gradle.properties /root/.gradle/gradle.properties"
@@ -163,7 +161,7 @@ spec:
 			echo 'I succeeeded!'
 
 			// Mark the version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
-//			sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
+			sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
 
 			// Collect JUnit test results
 			junit 'build/test-results/**/*.xml'
@@ -244,21 +242,17 @@ def assimilateEnvironmentVariables() {
 
 		println "Within assimilateEnvironmentVariables() => Jenkins node name is: [${env.NODE_NAME}]"
 
+		// Load properties from file and turn into environment variables
 		def selfProps = readProperties interpolate: true, file: 'EnvFile.properties'
 		selfProps.each {
 			key,value -> env."${key}" = "${value}" 
 		}
 		
-		// Overwrite the reckon scope and stage designated values if applicable values were passed as parameters
-		if (params.TARGET_RECKON_SCOPE != 'NA')
-		{
-			env.JENKINS_SLAVE_K8S_RECKON_SCOPE = params.TARGET_RECKON_SCOPE
-		}
-		if (params.TARGET_RECKON_STAGE != 'NA')
-		{
-			env.JENKINS_SLAVE_K8S_RECKON_STAGE = params.TARGET_RECKON_STAGE
-		}
+		// Overwrite designated environment variables values if applicable values were passed as parameters
+		// Note - this call must happen AFTER the environment variables were loaded from the file!
+		assimilateParameters()
 
+		// Show resolved environment variables values
 		println "JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME value is: [${env.JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME}]"
 		println "JENKINS_SLAVE_K8S_RECKON_SCOPE value is: [${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}]"
 		println "JENKINS_SLAVE_K8S_RECKON_STAGE value is: [${env.JENKINS_SLAVE_K8S_RECKON_STAGE}]"
@@ -270,6 +264,23 @@ def assimilateEnvironmentVariables() {
 
 		return env.JENKINS_SLAVE_K8S_DEPLOYMENT_CLOUD_NAME
 //	}
+}
+
+//
+// Digest applicable parameters and overwrite matching environment variables if needed
+//
+def assimilateParameters() {
+		println "Within assimilateParameters() => Jenkins node name is: [${env.NODE_NAME}]"
+
+		// Overwrite the reckon scope and stage designated values if applicable values were passed as parameters
+		if (params.TARGET_RECKON_SCOPE != 'NA')
+		{
+			env.JENKINS_SLAVE_K8S_RECKON_SCOPE = params.TARGET_RECKON_SCOPE
+		}
+		if (params.TARGET_RECKON_STAGE != 'NA')
+		{
+			env.JENKINS_SLAVE_K8S_RECKON_STAGE = params.TARGET_RECKON_STAGE
+		}
 }
 
 //
