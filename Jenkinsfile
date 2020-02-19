@@ -45,7 +45,9 @@ spec:
 		}
 	}
 	options { 
-		timestamps() 
+		timestamps()
+		
+		buildDiscarder(logRotator(numToKeepStr: '25'))
 	}
 	environment {
 		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per brach)
@@ -53,7 +55,8 @@ spec:
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = assimilateEnvironmentVariables()
 
 		// Obtain the access token Jenkins uses to connect to GitHub
-		GITHUB_ACCESS_TOKEN = credentials("${env.JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME}")
+//		GITHUB_ACCESS_TOKEN = credentials("${env.JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME}")
+		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
 	}
 	parameters {
 		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: 'Jenkinsfile', description: 'The desired Jenkinsfile to run')
@@ -206,7 +209,7 @@ def resolveCloudNameByBranchName() {
 //
 def resolveNamespaceByBranchName() {
 	node {
-		println "Within resolveNamespaceByBranchName() => Node name is: [${env.NODE_NAME}]"
+		println "Within resolveNamespaceByBranchName() => Jenkins node name is: [${env.NODE_NAME}]"
 
 		println "Branch name is: [${env.BRANCH_NAME}]"
 		println "Production branch name ENV_VAR is: [${env.PRODUCTION_BRANCH_NAME_ENV_VAR}]"
