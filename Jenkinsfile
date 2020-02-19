@@ -44,17 +44,6 @@ spec:
 """
 		}
 	}
-	parameters {
-		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: 'Jenkinsfile', description: 'The desired Jenkinsfile to run')
-
-//		text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-
-//		booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
-
-//		choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-
-//		password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
-	}	
 	options { 
 		timestamps() 
 	}
@@ -66,6 +55,17 @@ spec:
 		// Obtain the access token Jenkins uses to connect to GitHub
 		GITHUB_ACCESS_TOKEN = credentials("${env.JENKINS_SLAVE_K8S_GIT_STORE_ACCESS_TOKEN_NAME}")
 	}
+	parameters {
+		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: 'Jenkinsfile', description: 'The desired Jenkinsfile to run')
+
+//		text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+
+//		booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+
+//		choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+
+//		password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+	}	
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
@@ -147,15 +147,17 @@ spec:
 		always {
 			echo 'One way or another, I have finished'
 
-			// Mark the version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
-			sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
-
 			// Do some cleanup
 //			sh "rm /root/.gradle/gradle.properties"
 //			sh "rm /root/.gradle/init.gradle"
 		}
 		success {
 			echo 'I succeeeded!'
+
+			// Mark the version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
+			sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
+
+			// Collect JUnit test results
 			junit 'build/test-results/**/*.xml'
 		}
 		unstable {
