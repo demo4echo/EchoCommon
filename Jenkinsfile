@@ -31,7 +31,7 @@ pipeline {
 	parameters {
 		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: 'Jenkinsfile', description: 'The desired Jenkinsfile to run')
 
-		string(name: 'TARGET_RECKON_SCOPE', defaultValue: 'NA', description: 'The desired reckon scope to use in the build')
+		string(name: 'TARGET_RECKON_SCOPE', defaultValue: pipelineCommon.tiran(), description: 'The desired reckon scope to use in the build')
 
 		string(name: 'TARGET_RECKON_STAGE', defaultValue: 'NA', description: 'The desired reckon stage to use in the build')
 	}	
@@ -41,8 +41,7 @@ pipeline {
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = pipelineCommon.assimilateEnvironmentVariables()
 
 		// Obtain the access token Jenkins uses to connect to GitHub (using a Jenkins credentials ID)
-//		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
-		GITHUB_ACCESS_TOKEN = credentials(pipelineCommon.tiran())
+		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
 	}
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
