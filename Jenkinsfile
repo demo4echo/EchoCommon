@@ -1,5 +1,9 @@
 // We can omit this one as we marked the shared library to load implicitly
-@Library('EchoSharedLibrary') _
+//@Library('EchoSharedLibrary') _
+
+libraries {
+	lib('EchoSharedLibrary')
+}
 
 // Load shared resources
 def jenkinsSlavePodManifestResourceAsString = libraryResource 'jenkinsSlavePodManifest.yaml'
