@@ -31,7 +31,7 @@ pipeline {
 	parameters {
 		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: 'Jenkinsfile', description: 'The desired Jenkinsfile to run')
 
-		string(name: 'TARGET_RECKON_SCOPE', defaultValue: pipelineCommon.tiran(), description: 'The desired reckon scope to use in the build')
+		string(name: 'TARGET_RECKON_SCOPE', defaultValue: pipelineCommon.TIRAN, description: 'The desired reckon scope to use in the build')
 
 		string(name: 'TARGET_RECKON_STAGE', defaultValue: 'NA', description: 'The desired reckon stage to use in the build')
 	}	
