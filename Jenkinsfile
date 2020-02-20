@@ -11,8 +11,11 @@ pipeline {
 	agent {
 		kubernetes {
 			cloud pipelineCommon.resolveCloudNameByBranchName()
-			label 'jenkins-slave-pod-agent'
-			defaultContainer 'jdk-gradle-docker-k8s-helm'
+			label pipelineCommon.K8S_AGENT_LABEL
+			defaultContainer pipelineCommon.K8S_AGENT_DEFAULT_CONTAINER
+//			label 'jenkins-slave-pod-agent'
+//			defaultContainer 'jdk-gradle-docker-k8s-helm'
+
 //			yamlFile 'Jenkinsfile.JenkinsSlaveManifest.yaml'
 //			namespace pipelineCommon.resolveNamespaceByBranchName()
 /**		yaml """
