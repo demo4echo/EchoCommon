@@ -18,13 +18,6 @@ pipeline {
 		
 		buildDiscarder(logRotator(numToKeepStr: pipelineCommon.OPTIONS_BUILD_DISCARDER_LOG_ROTATOR_NUM_TO_KEEP_STR))
 	}
-	parameters {
-		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: pipelineCommon.PARAMS_TARGET_JENKINSFILE_FILE_NAME_DEFAULT_VALUE, description: 'The desired Jenkinsfile to run')
-
-		string(name: 'TARGET_RECKON_SCOPE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_SCOPE_DEFAULT_VALUE, description: 'The desired reckon scope to use in the build')
-
-		string(name: 'TARGET_RECKON_STAGE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_STAGE_DEFAULT_VALUE, description: 'The desired reckon stage to use in the build')
-	}	
 	environment {
 		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per branch)
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = pipelineCommon.assimilateEnvironmentVariables()
@@ -32,6 +25,15 @@ pipeline {
 		// Obtain the access token Jenkins uses to connect to GitHub (using a Jenkins credentials ID)
 		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
 	}
+	parameters {
+		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: pipelineCommon.PARAMS_TARGET_JENKINSFILE_FILE_NAME_DEFAULT_VALUE, description: 'The desired Jenkinsfile to run')
+
+		string(name: 'TARGET_RECKON_SCOPE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_SCOPE_DEFAULT_VALUE, description: 'The desired reckon scope to use in the build')
+
+		string(name: 'TARGET_RECKON_STAGE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_STAGE_DEFAULT_VALUE, description: 'The desired reckon stage to use in the build')
+
+		choice(name: 'RECKON', choices: ["${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}","${env.JENKINS_SLAVE_K8S_RECKON_STAGE}"], defaultValue: "${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}", description: 'Pick something')
+	}	
 	stages {
 		stage('\u2776 setup \u2728') {
 			steps {
