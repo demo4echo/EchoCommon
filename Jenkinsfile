@@ -36,7 +36,8 @@ pipeline {
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = pipelineCommon.assimilateEnvironmentVariables()
 
 		// Obtain the access token Jenkins uses to connect to GitHub (using a Jenkins credentials ID)
-		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
+//		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
+		GITHUB_ACCESS_TOKEN = credentials(pipelineCommon.GITHUB_ACCESS_TOKEN_CREDENTIALS_ID)
 	}
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
