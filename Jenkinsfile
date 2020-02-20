@@ -24,11 +24,34 @@ pipeline {
 		buildDiscarder(logRotator(numToKeepStr: pipelineCommon.OPTIONS_BUILD_DISCARDER_LOG_ROTATOR_NUM_TO_KEEP_STR))
 	}
 	parameters {
-		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: pipelineCommon.PARAMS_TARGET_JENKINSFILE_FILE_NAME_DEFAULT_VALUE, description: 'The desired Jenkinsfile to run')
-
-		string(name: 'TARGET_RECKON_SCOPE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_SCOPE_DEFAULT_VALUE, description: 'The desired reckon scope to use in the build')
-
-		string(name: 'TARGET_RECKON_STAGE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_STAGE_DEFAULT_VALUE, description: 'The desired reckon stage to use in the build')
+		choice (
+			name: 'TARGET_JENKINSFILE_FILE_NAME',
+			choices: [
+				pipelineCommon.PARAMS_TARGET_JENKINSFILE_FILE_NAME_OPTIONS[0],
+				pipelineCommon.PARAMS_TARGET_JENKINSFILE_FILE_NAME_OPTIONS[1]
+			],
+			description: 'The desired Jenkinsfile to run'
+		)
+		choice (
+			name: 'TARGET_RECKON_SCOPE',
+			choices: [
+				pipelineCommon.PARAMS_TARGET_RECKON_SCOPE_OPTIONS[0],
+				pipelineCommon.PARAMS_TARGET_RECKON_SCOPE_OPTIONS[1],
+				pipelineCommon.PARAMS_TARGET_RECKON_SCOPE_OPTIONS[2],
+				pipelineCommon.PARAMS_TARGET_RECKON_SCOPE_OPTIONS[3],
+			],
+			description: 'The desired reckon scope to use in the build'
+		)
+		choice (
+			name: 'TARGET_RECKON_STAGE',
+			choices: [
+				pipelineCommon.PARAMS_TARGET_RECKON_STAGE_OPTIONS[0],
+				pipelineCommon.PARAMS_TARGET_RECKON_STAGE_OPTIONS[1],
+				pipelineCommon.PARAMS_TARGET_RECKON_STAGE_OPTIONS[2],
+				pipelineCommon.PARAMS_TARGET_RECKON_STAGE_OPTIONS[3],
+			],
+			description: 'The desired reckon stage to use in the build'
+		)
 	}	
 	environment {
 		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per branch)
