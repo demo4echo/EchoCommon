@@ -8,7 +8,7 @@ pipeline {
 	agent {
 		kubernetes {
 			cloud pipelineCommon.resolveCloudNameByBranchName()
-			label pipelineCommon.K8S_AGENT_LABEL
+			label pipelineCommon.constructJenkinsSlavePodAgentLabel()
 			defaultContainer pipelineCommon.K8S_AGENT_DEFAULT_CONTAINER
 			yaml jenkinsSlavePodManifestResourceAsString
 		}
