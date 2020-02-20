@@ -7,8 +7,6 @@
 // Load shared resources
 def jenkinsSlavePodManifestResourceAsString = libraryResource 'jenkinsSlavePodManifest.yaml'
 
-//def GITHUB_ACCESS_TOKEN_CREDENTIALS_ID="github-demo4echo-access-token-for-reckon-gradle-plugin-id"
-
 pipeline {
 	agent {
 		kubernetes {
@@ -29,11 +27,11 @@ pipeline {
 		buildDiscarder(logRotator(numToKeepStr: '25'))
 	}
 	parameters {
-		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: 'Jenkinsfile', description: 'The desired Jenkinsfile to run')
+		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: pipelineCommon.TARGET_JENKINSFILE_FILE_NAME_DEFAULT_VALUE, description: 'The desired Jenkinsfile to run')
 
-		string(name: 'TARGET_RECKON_SCOPE', defaultValue: pipelineCommon.TIRAN, description: 'The desired reckon scope to use in the build')
+		string(name: 'TARGET_RECKON_SCOPE', defaultValue: pipelineCommon.TARGET_RECKON_SCOPE_DEFAULT_VALUE, description: 'The desired reckon scope to use in the build')
 
-		string(name: 'TARGET_RECKON_STAGE', defaultValue: 'NA', description: 'The desired reckon stage to use in the build')
+		string(name: 'TARGET_RECKON_STAGE', defaultValue: pipelineCommon.TARGET_RECKON_STAGE_DEFAULT_VALUE, description: 'The desired reckon stage to use in the build')
 	}	
 	environment {
 		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per brach)
@@ -41,6 +39,7 @@ pipeline {
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = pipelineCommon.assimilateEnvironmentVariables()
 
 		// Obtain the access token Jenkins uses to connect to GitHub (using a Jenkins credentials ID)
+		// Note - the values used in the credentials() helper must be String literals
 		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
 	}
 	stages {
