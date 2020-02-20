@@ -10,12 +10,12 @@ pipeline {
 			cloud pipelineCommon.resolveCloudNameByBranchName()
 			label pipelineCommon.K8S_AGENT_LABEL
 			defaultContainer pipelineCommon.K8S_AGENT_DEFAULT_CONTAINER
-//			yamlFile 'Jenkinsfile.JenkinsSlaveManifest.yaml'
+			yaml jenkinsSlavePodManifestResourceAsString
 //			namespace pipelineCommon.resolveNamespaceByBranchName()
+//			yamlFile 'Jenkinsfile.JenkinsSlaveManifest.yaml'
 //		   yaml """
 //.................
 //"""
-			yaml jenkinsSlavePodManifestResourceAsString
 		}
 	}
 	options { 
