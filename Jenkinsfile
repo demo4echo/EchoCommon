@@ -1,9 +1,6 @@
 // We can omit this one as we marked the shared library to load implicitly
 @Library('EchoSharedLibrary') _
 
-// Do some imports
-//import com.efrat.example.echo.Constants
-
 // Load shared resources
 def jenkinsSlavePodManifestResourceAsString = libraryResource 'jenkinsSlavePodManifest.yaml'
 
@@ -13,14 +10,11 @@ pipeline {
 			cloud pipelineCommon.resolveCloudNameByBranchName()
 			label pipelineCommon.K8S_AGENT_LABEL
 			defaultContainer pipelineCommon.K8S_AGENT_DEFAULT_CONTAINER
-//			label 'jenkins-slave-pod-agent'
-//			defaultContainer 'jdk-gradle-docker-k8s-helm'
-
 //			yamlFile 'Jenkinsfile.JenkinsSlaveManifest.yaml'
 //			namespace pipelineCommon.resolveNamespaceByBranchName()
-/**		yaml """
-.................
-"""*/
+//		   yaml """
+//.................
+//"""
 			yaml jenkinsSlavePodManifestResourceAsString
 		}
 	}
