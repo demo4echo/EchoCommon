@@ -1,9 +1,8 @@
 // We can omit this one as we marked the shared library to load implicitly
-//@Library('EchoSharedLibrary') _
+@Library('EchoSharedLibrary') _
 
-libraries {
-	lib('EchoSharedLibrary')
-}
+// Do some imports
+import com.efrat.example.echo.Constants
 
 // Load shared resources
 def jenkinsSlavePodManifestResourceAsString = libraryResource 'jenkinsSlavePodManifest.yaml'
@@ -40,8 +39,8 @@ pipeline {
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = pipelineCommon.assimilateEnvironmentVariables()
 
 		// Obtain the access token Jenkins uses to connect to GitHub (using a Jenkins credentials ID)
-		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
-//		GITHUB_ACCESS_TOKEN = credentials(pipelineCommon.GITHUB_ACCESS_TOKEN_CREDENTIALS_ID)
+//		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
+		GITHUB_ACCESS_TOKEN = credentials(Constants.GITHUB_ACCESS_TOKEN_CREDENTIALS_ID)
 	}
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
