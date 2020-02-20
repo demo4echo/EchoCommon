@@ -28,9 +28,13 @@ pipeline {
 			description: 'The desired Jenkinsfile to run'
 		)
 
-		string(name: 'TARGET_RECKON_SCOPE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_SCOPE_DEFAULT_VALUE, description: 'The desired reckon scope to use in the build')
+//		string(name: 'TARGET_RECKON_SCOPE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_SCOPE_DEFAULT_VALUE, description: 'The desired reckon scope to use in the build')
 
-		string(name: 'TARGET_RECKON_STAGE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_STAGE_DEFAULT_VALUE, description: 'The desired reckon stage to use in the build')
+//		string(name: 'TARGET_RECKON_STAGE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_STAGE_DEFAULT_VALUE, description: 'The desired reckon stage to use in the build')
+
+		string(name: 'TARGET_RECKON_SCOPE', defaultValue: 'NA', description: 'The desired reckon scope to use in the build')
+
+		string(name: 'TARGET_RECKON_STAGE', defaultValue: 'NA', description: 'The desired reckon stage to use in the build')
 	}	
 	environment {
 		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per branch)
