@@ -2,12 +2,12 @@
 @Library('EchoSharedLibrary') _
 
 // Do some imports
-import com.efrat.example.echo.Constants
+//import com.efrat.example.echo.Constants
 
 // Load shared resources
 def jenkinsSlavePodManifestResourceAsString = libraryResource 'jenkinsSlavePodManifest.yaml'
 
-def GITHUB_ACCESS_TOKEN_CREDENTIALS_ID="github-demo4echo-access-token-for-reckon-gradle-plugin-id"
+//def GITHUB_ACCESS_TOKEN_CREDENTIALS_ID="github-demo4echo-access-token-for-reckon-gradle-plugin-id"
 
 pipeline {
 	agent {
@@ -42,7 +42,7 @@ pipeline {
 
 		// Obtain the access token Jenkins uses to connect to GitHub (using a Jenkins credentials ID)
 //		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
-		GITHUB_ACCESS_TOKEN = credentials(GITHUB_ACCESS_TOKEN_CREDENTIALS_ID)
+		GITHUB_ACCESS_TOKEN = credentials(pipelineCommon.tiran())
 	}
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
