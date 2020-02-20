@@ -29,6 +29,8 @@ pipeline {
 
 		string(name: 'TARGET_RECKON_STAGE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_STAGE_DEFAULT_VALUE, description: 'The desired reckon stage to use in the build')
 
+		string(name: 'TEST', defaultValue: pipelineCommon.test(), description: 'This is a test')
+
 //		choice(name: 'RECKON', choices: ["${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}","${env.JENKINS_SLAVE_K8S_RECKON_STAGE}"], description: 'Pick something')
 	}	
 	environment {
