@@ -20,7 +20,7 @@ pipeline {
 	}
 	parameters {
 //		string(name: 'TARGET_JENKINSFILE_FILE_NAME', defaultValue: pipelineCommon.PARAMS_TARGET_JENKINSFILE_FILE_NAME_DEFAULT_VALUE, description: 'The desired Jenkinsfile to run')
-		choice(name: 'TARGET_JENKINSFILE_FILE_NAME', choices: [PARAMS_TARGET_JENKINSFILE_FILE_NAME_OPTIONS[0],PARAMS_TARGET_JENKINSFILE_FILE_NAME_OPTIONS[1]], description: 'The desired Jenkinsfile to run')
+		choice(name: 'TARGET_JENKINSFILE_FILE_NAME', choices: [pipelineCommon.PARAMS_TARGET_JENKINSFILE_FILE_NAME_OPTIONS[0],pipelineCommon.PARAMS_TARGET_JENKINSFILE_FILE_NAME_OPTIONS[1]], description: 'The desired Jenkinsfile to run')
 
 		string(name: 'TARGET_RECKON_SCOPE', defaultValue: pipelineCommon.PARAMS_TARGET_RECKON_SCOPE_DEFAULT_VALUE, description: 'The desired reckon scope to use in the build')
 
