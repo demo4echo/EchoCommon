@@ -318,7 +318,7 @@ task designatedTagCreate {
 	
 	doFirst {
 		println "Tiran: [" + project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() + "]"
-		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim() == false)
+		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == true)
 		{
 			throw new GradleException("Missing or Empty ${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME} project property")
 		}
