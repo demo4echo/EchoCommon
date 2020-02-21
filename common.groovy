@@ -33,7 +33,7 @@ def manifestNamespace() {
 // Export constants and functions (by turning the functions into closures)
 ext {
 	// Constants
-	CONST_DESIGNATED_TAG_NAME_SYSTEM_PROPERTY_NAME='demo4echo.designatedTagName'
+	CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME='demo4echo.designatedTagName'
 
 	// Functions
 	obtainCurrentBranchName = this.&obtainCurrentBranchName

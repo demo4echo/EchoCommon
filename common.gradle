@@ -317,19 +317,19 @@ task designatedTagCreate {
 	description = 'Tags the current head with a designated name'
 	
 	doFirst {
-		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_SYSTEM_PROPERTY_NAME) == false)
+		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false)
 		{
-			throw new GradleException("Missing 'demo4echo.designatedTagName' project property")
+			throw new GradleException("Missing ${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME} project property")
 		}
 	}
 	
 	doLast {
 		grgit.tag.add {
-			name = project.ext['demo4echo.designatedTagName']
+			name = project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]
 			message = "Release of ${name}"
 		}
 		
-		println "Designated tag cretaed: ${project.ext['demo4echo.designatedTagName']}"
+		println "Designated tag cretaed: ${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}"
 	}
 }
 
@@ -337,18 +337,18 @@ task designatedTagDestroy {
 	description = 'Removes designated tag name from GIT'
 	
 	doFirst {
-		if (project.hasProperty('demo4echo.designatedTagName') == false)
+		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false)
 		{
-			throw new GradleException("Missing 'demo4echo.designatedTagName' project property")
+			throw new GradleException("Missing ${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME} project property")
 		}
 	}
 	
 	doLast {
 		grgit.tag.remove {
-			names = [project.ext['demo4echo.designatedTagName']]
+			names = [project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]]
 		}
 		
-		println "Designated tag destroyed: ${project.ext['demo4echo.designatedTagName']}"
+		println "Designated tag destroyed: ${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}"
 	}
 }
 
