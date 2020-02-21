@@ -377,7 +377,7 @@ task gitPull {
 // DesignatedVersion helpers
 task printDesignatedVersion {
 	doLast {
-		println "Designated version is: [${productVersion}]"
+		println "Designated version: ${productVersion}"
 	}
 }
 task stampDesignatedVersion(dependsOn: designatedTagCreate)
