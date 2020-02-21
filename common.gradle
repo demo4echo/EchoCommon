@@ -337,7 +337,7 @@ task designatedTagDestroy {
 	description = 'Removes designated tag name from GIT'
 	
 	doFirst {
-		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == true)
+		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isEmpty() == true)
 		{
 			throw new GradleException("Missing or Empty '${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME}' project property")
 		}
