@@ -47,7 +47,21 @@ pipeline {
 			],
 			description: 'The desired reckon stage to use in the build'
 		)
-	}	
+		validatingString (
+			name: 'DESIGNATED_VERSION',
+			defaultValue: pipelineCommon.PARAMS_DESIGNATED_VERSION_DEFAULT_VALUE,
+			regex: pipelineCommon.PARAMS_DESIGNATED_VERSION_REG_EXP,
+			failedValidationMessage: "Validation of designated version failed!",
+			description: """
+			The desiganted (desired) version to be used.
+			Notes:
+			------
+			1. The input given must comply with 'Semantic Versioning 2.0.0' (https://semver.org) with regards to: <MAJOR>.<MINOR>.<PATCH>
+			2. The version supplied must be higher than any existing version (tag) in the target repo(s)
+			3. This will void the use of the 'TARGET_RECKON_SCOPE' and 'TARGET_RECKON_STAGE' parameters!
+			"""
+		)
+	}
 	environment {
 		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per branch)
 		X_EFRAT_ECHO_DUMMY_ENV_VAR = pipelineCommon.assimilateEnvironmentVariables()
@@ -66,10 +80,26 @@ pipeline {
 				sh "cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.gradle/init.gradle /root/.gradle/init.gradle"
 			}
 		}
-		stage('\u2777 stamp4release \u2728') {
+		stage('\u2777 Stamp Release \u2728') {
+			when { 
+				expression { 
+					params.DESIGNATED_VERSION.trim().isEmpty() == true 
+				} 
+			}
 			steps {
 				// Mark the version as a release one (stage should be 'final')
 				sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
+			}
+		}
+		stage('\u2777 Stamp Designated Release \u2728') {
+			when { 
+				expression { 
+					params.DESIGNATED_VERSION.trim().isEmpty() == false 
+				} 
+			}
+			steps {
+				// Mark the version according to a designated (specific) one (bypass reckon plugin)
+				sh "./gradlew -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishDesignatedVersion"
 			}
 		}
 	}
