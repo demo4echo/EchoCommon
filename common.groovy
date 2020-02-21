@@ -15,7 +15,14 @@ def obtainCurrentBranchName() {
 def manifestVersion() {
 	def currentBranchName = obtainCurrentBranchName()
 	def currentVersionName = project.version.toString() // must be done this way since reckon makes project.version non serializable
-	return "${currentVersionName}-${currentBranchName}"
+	def manifestedVersion = "${currentVersionName}-${currentBranchName}"
+
+	// Check if we are to work with a designated version (tag), otherwise return reckon based version (tag)
+	if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == true && project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == false) {
+		manifestedVersion = "${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}-${currentBranchName}"
+	}
+
+	return manifestedVersion
 }
 
 // Construct an applicable namespace to be used by the Helm Chart

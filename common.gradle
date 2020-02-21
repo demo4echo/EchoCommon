@@ -373,3 +373,14 @@ task gitPull {
 		}
 	}
 }
+
+// DesignatedVersion helpers
+task printDesignatedVersion {
+	doLast {
+		println "Designated version is: [${productVersion}]"
+	}
+}
+task stampDesignatedVersion(dependsOn: designatedTagCreate)
+task publishDesignatedVersion(dependsOn: stampDesignatedVersion,gitPush) {
+	gitPush.mustRunAfter stampDesignatedVersion
+}
