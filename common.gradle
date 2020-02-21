@@ -317,7 +317,7 @@ task designatedTagCreate {
 	description = 'Tags the current head with a designated name'
 	
 	doFirst {
-		if (project.hasProperty('demo4echo.designatedTagName') == false)
+		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_SYSTEM_PROPERTY_NAME) == false)
 		{
 			throw new GradleException("Missing 'demo4echo.designatedTagName' project property")
 		}
