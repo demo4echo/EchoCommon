@@ -317,10 +317,9 @@ task designatedTagCreate {
 	description = 'Tags the current head with a designated name'
 	
 	doFirst {
-		println "Tiran: [" + project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() + "]"
 		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == true)
 		{
-			throw new GradleException("Missing or Empty ${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME} project property")
+			throw new GradleException("Missing or Empty '${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME}' project property")
 		}
 	}
 	
@@ -338,9 +337,9 @@ task designatedTagDestroy {
 	description = 'Removes designated tag name from GIT'
 	
 	doFirst {
-		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false)
+		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == true)
 		{
-			throw new GradleException("Missing or Empty ${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME} project property")
+			throw new GradleException("Missing or Empty '${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME}' project property")
 		}
 	}
 	
