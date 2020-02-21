@@ -1,10 +1,4 @@
 //
-// Constants
-//
-
-CONST_DESIGNATED_TAG_NAME_SYSTEM_PROPERTY_NAME='demo4echo.designatedTagName'
-
-//
 // Works with org.ajoberstar.grgit plugin
 //
 
@@ -36,10 +30,10 @@ def manifestNamespace() {
 	return namespace
 }
 
-// Export constants and functions by turning them into closures
+// Export constants and functions (by turning the functions into closures)
 ext {
 	// Constants
-	CONST_DESIGNATED_TAG_NAME_SYSTEM_PROPERTY_NAME = this.&CONST_DESIGNATED_TAG_NAME_SYSTEM_PROPERTY_NAME
+	CONST_DESIGNATED_TAG_NAME_SYSTEM_PROPERTY_NAME='demo4echo.designatedTagName'
 
 	// Functions
 	obtainCurrentBranchName = this.&obtainCurrentBranchName
