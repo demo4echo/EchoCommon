@@ -381,6 +381,6 @@ task printDesignatedVersion {
 	}
 }
 task stampDesignatedVersion(dependsOn: designatedTagCreate)
-task publishDesignatedVersion(dependsOn: stampDesignatedVersion,gitPush) {
+task publishDesignatedVersion(dependsOn: [stampDesignatedVersion,gitPush]) {
 	gitPush.mustRunAfter stampDesignatedVersion
 }
