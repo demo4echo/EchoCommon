@@ -78,7 +78,8 @@ pipeline {
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
-				sh 'whoami'
+//				sh 'whoami'
+				echo "User [$(whoami)] is running within [$0] Shell"
 
 				sh "mkdir -p /root/.docker && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.docker /root/.docker"
 				sh "mkdir -p /root/.kube && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.kube /root/.kube"
