@@ -34,4 +34,4 @@ LABEL description=$PRODUCT_DESCRIPTION
 LABEL version=$PRODUCT_VERSION
 LABEL build-date=$BUILD_DATE
 LABEL vcs-url=$VCS_URL
-LABEL vcs-ref=$VCF_REF
+LABEL vcs-ref=$VCS_REF
