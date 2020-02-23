@@ -14,8 +14,11 @@ ext {
 	productionBranchName = envVarsProps.PRODUCTION_BRANCH_NAME_ENV_VAR
 	stagingBranchName = envVarsProps.STAGING_BRANCH_NAME_ENV_VAR
 	dockerFilePath = "${-> commonSubModuleName}${File.separator}Dockerfile"
+	vcsURL = grgit.remote.list()[0].url
 	vcsRevision = grgit.head().id
 	vcsAbbreviatedRevision = grgit.head().abbreviatedId
+	vcsUsername = grgit.repository.jgit.repository.config.getString("user", null, "name")
+	vcsUseremail = grgit.repository.jgit.repository.config.getString("user", null, "email")
 	buildUser = System.properties['user.name']
 	buildTimestamp = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date())
 	buildFramework	= "Gradle ${gradle.gradleVersion}"
@@ -184,7 +187,17 @@ docker {
 	name "${productName}:${productVersion}"
 	tag "privateRegistry", "${productRepository}:${productVersion}"	// For DockerHub registry
 	dockerfile file(dockerFilePath)
-	buildArgs([JAR_PRODUCT_NAME:"${productName}",JAR_PRODUCT_VERSION:"${productVersion}"])
+	buildArgs([
+		SERVICE_NAME: serviceName,
+		PRODUCT_NAME: productName,
+		PRODUCT_VERSION: productVersion,
+		PRODUCT_DESCRIPTION: project.description,
+		MAINTAINER_USERNAME: vcsUsername,
+		MAINTAINER_USEREMAIL: vcsUseremail,
+		BUILD_DATE: buildTimestamp,
+		VCS_URL: vcsURL,
+		VCS_REF: vcsAbbreviatedRevision
+	])
 	files jar.outputs
 	copySpec.into(buildDir.getName() + "/libs")
 //	pull true
