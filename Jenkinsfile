@@ -79,7 +79,8 @@ pipeline {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
 //				sh 'whoami'
-				sh "CURRENT_USER=`whoami` && CURRENT_SHELL=`echo $0` && echo User [$CURRENT_USER] is running within [$CURRENT_SHELL] Shell on Node [$NODE_HOST_NAME_ENV_VAR]"
+//				sh "CURRENT_USER=`whoami` && CURRENT_SHELL=`echo $0` && echo User [$CURRENT_USER] is running within [$CURRENT_SHELL] Shell on Node [$NODE_HOST_NAME_ENV_VAR]"
+				sh "CURRENT_USER=`whoami` && CURRENT_SHELL=`echo $0` && echo User [$CURRENT_USER] is running within [$CURRENT_SHELL] Shell"
 
 				sh "mkdir -p /root/.docker && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.docker /root/.docker"
 				sh "mkdir -p /root/.kube && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.kube /root/.kube"
