@@ -79,6 +79,11 @@ pipeline {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
 				sh 'echo User [`whoami`] is running within [`ps -hp $$ | awk \'{print $5}\'`] Shell on Node [$NODE_HOST_NAME_ENV_VAR]'
+				sh 'echo The following script is executing: [$0]'
+
+				sh 'echo JAVA_HOME value is: [$JAVA_HOME]'
+				sh 'echo PATH value is: [$PATH]'
+				sh 'echo PWD value is: [$PWD]'
 
 				sh "mkdir -p /root/.docker && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.docker /root/.docker"
 				sh "mkdir -p /root/.kube && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.kube /root/.kube"
@@ -89,6 +94,9 @@ pipeline {
 					// Ensure target namespace is resolved
 					pipelineCommon.resolveNamespaceByBranchName()
 				}
+
+				// For Debug!
+				sleep 300
 			}
 		}
 		stage('\u2777 stamp \u2728') {//\u1F6E0
