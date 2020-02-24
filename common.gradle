@@ -17,8 +17,8 @@ ext {
 	vcsURL = grgit.remote.list()[0].url
 	vcsRevision = grgit.head().id
 	vcsAbbreviatedRevision = grgit.head().abbreviatedId
-	vcsUsername = grgit.repository.jgit.repository.config.getString("user", null, "name") ?: "DevOpsUser4${SERVICE_NAME}"
-	vcsUseremail = grgit.repository.jgit.repository.config.getString("user", null, "email") ?: "devopsuser4${SERVICE_NAME}@efrat.com"
+	vcsUsername = grgit.repository.jgit.repository.config.getString("user", null, "name") ?: "DevOpsUser4${serviceName}"
+	vcsUseremail = grgit.repository.jgit.repository.config.getString("user", null, "email") ?: "devopsuser4${serviceName}@efrat.com"
 	buildUser = System.properties['user.name']
 	buildTimestamp = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date())
 	buildFramework	= "Gradle ${gradle.gradleVersion}"
