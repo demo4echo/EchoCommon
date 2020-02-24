@@ -127,7 +127,8 @@ tasks.eclipse.dependsOn << {
 
 // Create an uber jar
 jar {
-	archiveClassifier=obtainCurrentBranchName()
+	archiveVersion = manifestVersion()
+//	archiveClassifier = obtainCurrentBranchName()
 	
 	manifest {
 			attributes(
