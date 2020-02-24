@@ -95,8 +95,8 @@ pipeline {
 					pipelineCommon.resolveNamespaceByBranchName()
 				}
 
-				// For Debug!
-				sleep 300
+				// For Debug Only!
+//				sleep 300
 			}
 		}
 		stage('\u2777 stamp \u2728') {//\u1F6E0
