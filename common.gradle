@@ -47,7 +47,7 @@ gradle.taskGraph.afterTask { Task task ->
 // The Reckon plugin
 reckon {
 	scopeFromProp()
-	stageFromProp("${reckon_development_stage_name}","${reckon_integration_stage_name}","${reckon_production_stage_name}","${reckon_release_stage_name}")
+	stageFromProp("${reckon_development_stage_name}","${reckon_staging_stage_name}","${reckon_production_stage_name}","${reckon_FINAL_stage_name}")
 }
 
 // Reckon helpers
