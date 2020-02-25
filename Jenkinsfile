@@ -81,6 +81,11 @@ pipeline {
 	stages {
 		stage('\u2776 setup \u2728') {//\u1F4A1
 			steps {
+				//
+				// Verify this isn't a replayed build as the first step!
+				//
+				failReplayedBuild "${env.BUILD_TAG}"
+
 				sh 'echo User [`whoami`] is running within [`ps -hp $$ | awk \'{print $5}\'`] Shell on Node [$NODE_HOST_NAME_ENV_VAR]'
 				sh 'echo The following script is executing: [$0]'
 
@@ -97,6 +102,11 @@ pipeline {
 					// Ensure target namespace is resolved
 					pipelineCommon.resolveNamespaceByBranchName()
 				}
+
+				//
+				// Update build name and description
+				//
+				updateBuildInformation()
 
 				// For Debug Only!
 //				sleep 300
