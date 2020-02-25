@@ -125,7 +125,7 @@ pipeline {
 			echo "Build description name is: [${env.BUILD_DESCRIPTION}]"
 
 			script {
-				println "Next build is: [${currentBuild.nextBuild}]"
+				println "The Next build is: [${currentBuild.nextBuild}]"
 			}
 
 			// Do some cleanup
