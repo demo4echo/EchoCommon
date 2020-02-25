@@ -22,6 +22,8 @@ pipeline {
 		timestamps()
 		
 		buildDiscarder(logRotator(numToKeepStr: pipelineCommon.OPTIONS_BUILD_DISCARDER_LOG_ROTATOR_NUM_TO_KEEP_STR))
+
+		parallelsAlwaysFailFast()
 	}
 	parameters {
 		choice (

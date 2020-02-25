@@ -17,6 +17,8 @@ pipeline {
 		timestamps()
 		
 		buildDiscarder(logRotator(numToKeepStr: pipelineCommon.OPTIONS_BUILD_DISCARDER_LOG_ROTATOR_NUM_TO_KEEP_STR))
+
+		parallelsAlwaysFailFast()
 	}
 	parameters {
 		choice (
@@ -116,8 +118,15 @@ pipeline {
 		always {
 			echo 'One way or another, I have finished'
 
+			buildName 'myBuildName'
+			buildDescription 'myBuildDesc'
+
 			echo "Build display name is: [${env.BUILD_DISPLAY_NAME}]"
 			echo "Build description name is: [${env.BUILD_DESCRIPTION}]"
+
+			script {
+				println "Next build is: [${currentBuild.nextBuild}]"
+			}
 
 			// Do some cleanup
 //			sh "rm /root/.gradle/gradle.properties"
