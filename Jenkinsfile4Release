@@ -75,7 +75,7 @@ pipeline {
 	stages {
 		stage('\u2776 setup \u2728') {
 			environment {
-				PRIME_VERSION = sh(script: './invokeGradle.sh -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} printApplicableVersion | grep Prime | awk \'{print \$3}\'', returnStdout: true)
+				PRIME_VERSION = sh(script: "./invokeGradle.sh -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} printApplicableVersion | grep Prime | awk '{print \$3}'", returnStdout: true)
 			}
 			steps {
 				//
