@@ -418,6 +418,6 @@ task printApplicableVersion {
 			applicableVersionName = project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]
 		}
 
-		println "Applicable version: ${applicableVersionName}"
+		println "Prime version: ${applicableVersionName}"
 	}
 }
