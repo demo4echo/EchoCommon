@@ -407,3 +407,17 @@ task stampDesignatedVersion(dependsOn: designatedTagCreate)
 task publishDesignatedVersion(dependsOn: [stampDesignatedVersion,gitPush]) {
 	gitPush.mustRunAfter stampDesignatedVersion
 }
+
+// One version to rule them all
+task printApplicableVersion {
+	doLast {
+		def applicableVersionName = project.version.toString()
+
+		// Check if we are to work with a designated version (tag), otherwise return reckon based version (tag)
+		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == true && project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == false) {
+			applicableVersionName = project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]
+		}
+
+		println "Applicable version: ${applicableVersionName}"
+	}
+}
