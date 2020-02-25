@@ -116,6 +116,9 @@ pipeline {
 		always {
 			echo 'One way or another, I have finished'
 
+			echo "Build display name is: [${env.BUILD_DISPLAY_NAME}]"
+			echo "Build description name is: [${env.BUILD_DESCRIPTION}]"
+
 			// Do some cleanup
 //			sh "rm /root/.gradle/gradle.properties"
 //			sh "rm /root/.gradle/init.gradle"
