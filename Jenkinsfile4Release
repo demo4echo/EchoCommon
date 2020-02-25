@@ -74,9 +74,6 @@ pipeline {
 	}
 	stages {
 		stage('\u2776 setup \u2728') {
-			environment {
-				PRIME_VERSION = sh(script: "./invokeGradle.sh -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} printApplicableVersion | grep Prime | awk '{print \$3}'", returnStdout: true)
-			}
 			steps {
 				//
 				// Verify this isn't a replayed build as the first step!
@@ -98,8 +95,7 @@ pipeline {
 				//
 				// Update build name and description
 				//
-				buildName "#${env.BUILD_NUMBER}:v${env.PRIME_VERSION}"
-				buildDescription "@${env.NODE_HOST_NAME_ENV_VAR}"
+				updateBuildInformation()
 
 				// For Debug Only!
 //				sleep 300
