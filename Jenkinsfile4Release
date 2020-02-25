@@ -74,6 +74,9 @@ pipeline {
 	}
 	stages {
 		stage('\u2776 setup \u2728') {
+			environment {
+				PRIME_VERSION = sh(script: './invokeGradle.sh -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} printApplicableVersion | grep Prime | awk \'{print $3}\'', returnStdout: true)
+			}
 			steps {
 				sh 'echo User [`whoami`] is running within [`ps -hp $$ | awk \'{print $5}\'`] Shell on Node [$NODE_HOST_NAME_ENV_VAR]'
 				sh 'echo The following script is executing: [$0]'
@@ -86,6 +89,10 @@ pipeline {
 				sh "mkdir -p /root/.kube && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.kube /root/.kube"
 				sh "mkdir -p /root/.gradle && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.gradle/gradle.properties /root/.gradle/gradle.properties"
 				sh "mkdir -p /root/.gradle && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.gradle/init.gradle /root/.gradle/init.gradle"
+
+				// Update build name and description
+				buildName "#${env.BUILD_NUMBER}:v${env.PRIME_VERSION}"
+				buildDescription "@${env.NODE_HOST_NAME_ENV_VAR}"
 
 				// For Debug Only!
 //				sleep 300
@@ -117,12 +124,6 @@ pipeline {
 	post {
 		always {
 			echo 'One way or another, I have finished'
-
-			buildName 'myBuildName'
-			buildDescription 'myBuildDesc'
-
-			echo "Build display name is: [${env.BUILD_DISPLAY_NAME}]"
-			echo "Build description name is: [${env.BUILD_DESCRIPTION}]"
 
 			script {
 				println "The Next build is: [${currentBuild.nextBuild}]"
