@@ -250,6 +250,10 @@ helm {
 
 	filtering {
 		// These values will be resolvable in all charts' YAML files (e.g. imageTag => ${productVersion})
+		values.put 'chartDescription',"${project.description}"
+		values.put 'appVersion',"${productVersion}"
+		values.put 'maintainer.name',"${vcsUsername}"
+		values.put 'maintainer.email',"${vcsUseremail}"
 		values.put 'imageTag',"${productVersion}"
 		values.put 'imageRepository',"${productRepository}"
 		values.put 'servicePort',"${productInternalPort}"
@@ -259,8 +263,8 @@ helm {
 
 	charts {
 		"${productName}" {
-//			chartName = productName
-			chartVersion = productVersion
+			chartName = productName
+			chartVersion = helmChartVersion ?: productVersion
 			sourceDir = file("${productK8ShelmChartsFolder}${File.separator}${productName}")
 		}
 	}
