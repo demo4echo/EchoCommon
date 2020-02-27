@@ -13,7 +13,7 @@ ext {
 	productK8ShelmChartsFolder = "k8s${File.separator}helm${File.separator}charts"
 	productionBranchName = envVarsProps.PRODUCTION_BRANCH_NAME_ENV_VAR
 	stagingBranchName = envVarsProps.STAGING_BRANCH_NAME_ENV_VAR
-	dockerFilePath = "${-> commonSubModuleName}${File.separator}Dockerfile"
+	dockerFilePath = dockerFilePathOverride ? "${-> dockerFilePathOverride}" : "${-> commonSubModuleName}${File.separator}Dockerfile"
 	vcsURL = grgit.remote.list()[0].url
 	vcsRevision = grgit.head().id
 	vcsAbbreviatedRevision = grgit.head().abbreviatedId
