@@ -50,8 +50,7 @@ pipeline {
 				pipelineCommon.PARAMS_TARGET_RECKON_STAGE_OPTIONS[0],
 				pipelineCommon.PARAMS_TARGET_RECKON_STAGE_OPTIONS[1],
 				pipelineCommon.PARAMS_TARGET_RECKON_STAGE_OPTIONS[2],
-				pipelineCommon.PARAMS_TARGET_RECKON_STAGE_OPTIONS[3],
-				pipelineCommon.PARAMS_TARGET_RECKON_STAGE_OPTIONS[4]
+				pipelineCommon.PARAMS_TARGET_RECKON_STAGE_OPTIONS[3]
 			],
 			description: 'The desired reckon stage to use in the build'
 		)

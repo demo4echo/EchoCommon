@@ -15,11 +15,15 @@ def obtainCurrentBranchName() {
 def manifestVersion() {
 	def currentBranchName = obtainCurrentBranchName()
 	def currentVersionName = project.version.toString() // must be done this way since reckon makes project.version non serializable
-	def manifestedVersion = "${currentVersionName}-${currentBranchName}"
+	def manifestedVersion = "${insignificantVersionNotation}-${currentBranchName}"
 
-	// Check if we are to work with a designated version (tag), otherwise return reckon based version (tag)
+	// Check if we are to work with a designated version (tag) - in which case use it
 	if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == true && project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == false) {
 		manifestedVersion = "${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}-${currentBranchName}"
+	}
+	// Otherwise check if the version should be significant (in which case use reckon based version (tag))
+	else if (currentBranchName == envVarsProps.PRODUCTION_BRANCH_NAME_ENV_VAR || currentBranchName == envVarsProps.STAGING_BRANCH_NAME_ENV_VAR) {
+		manifestedVersion = "${currentVersionName}-${currentBranchName}"
 	}
 
 	return manifestedVersion
