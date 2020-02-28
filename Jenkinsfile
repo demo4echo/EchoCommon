@@ -184,6 +184,7 @@ pipeline {
 			echo 'I succeeeded!'
 
 			script {
+				// Development cluster (serving features and defects branches) should not allow generating tags
 				if (env.CLOUD_NAME != 'development') {
 					if (params.DESIGNATED_VERSION.trim().isEmpty() == true) {
 						// Mark the version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
