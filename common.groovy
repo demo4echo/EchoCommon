@@ -1,7 +1,3 @@
-// Load environment variables
-def envVarsProps = new Properties()
-file("EnvFile.properties").withInputStream { envVarsProps.load(it) }
-
 //
 // Works with org.ajoberstar.grgit plugin
 //
@@ -16,7 +12,7 @@ def obtainCurrentBranchName() {
 //
 
 // Builds a proper version name
-def manifestVersion() {
+def manifestVersion(String productionBranchName,String stagingBranchName) {
 	def currentBranchName = obtainCurrentBranchName()
 	def currentVersionName = project.version.toString() // must be done this way since reckon makes project.version non serializable
 	def manifestedVersion = "${insignificantVersionNotation}-${currentBranchName}"
@@ -26,7 +22,7 @@ def manifestVersion() {
 		manifestedVersion = "${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}-${currentBranchName}"
 	}
 	// Otherwise check if the version should be significant (in which case use reckon based version (tag))
-	else if (currentBranchName == envVarsProps.PRODUCTION_BRANCH_NAME_ENV_VAR || currentBranchName == envVarsProps.STAGING_BRANCH_NAME_ENV_VAR) {
+	else if (currentBranchName == productionBranchName || currentBranchName == stagingBranchName) {
 		manifestedVersion = "${currentVersionName}-${currentBranchName}"
 	}
 
