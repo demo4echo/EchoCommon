@@ -195,6 +195,9 @@ pipeline {
 						sh "./gradlew -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishDesignatedVersion"
 					}
 				}
+				else {
+					echo 'Skipping VCS tagging as development environment has been observed (for which tags should not be generated)'
+				}
 			}
 
 			// Collect JUnit test results
