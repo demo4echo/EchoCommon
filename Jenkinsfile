@@ -184,13 +184,15 @@ pipeline {
 			echo 'I succeeeded!'
 
 			script {
-				if (params.DESIGNATED_VERSION.trim().isEmpty() == true) {
-					// Mark the version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
-					sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
-				}
-				else {
-					// Mark the designated version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
-					sh "./gradlew -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishDesignatedVersion"
+				if (env.CLOUD_NAME != 'development') {
+					if (params.DESIGNATED_VERSION.trim().isEmpty() == true) {
+						// Mark the version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
+						sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
+					}
+					else {
+						// Mark the designated version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
+						sh "./gradlew -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishDesignatedVersion"
+					}
 				}
 			}
 
