@@ -1,3 +1,7 @@
+// Load environment variables
+def envVarsProps = new Properties()
+file("EnvFile.properties").withInputStream { envVarsProps.load(it) }
+
 //
 // Works with org.ajoberstar.grgit plugin
 //
