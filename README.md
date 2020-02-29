@@ -4,7 +4,7 @@ _The shared module for all the µs of the project/product :shipit:_
 ## TL;DR:
 The module is used as sub-module in all the µs of the product and maintains all the shared logic between the µs, mainly in the area of the Build Automation Tool (Gradle and Jenkins in this case).
 
-### Principal Files:
+### Principal Items:
 - **Jenkinsfile** and **Jenkinsfile4Release**
 - **Dockerfile**
 - **branchSpecificConfig.properties** - holds the branch unique configuration and utilized by the [pipelineCommon.groovy](https://github.com/demo4echo/JenkinsSharedLibrary/blob/master/vars/pipelineCommon.groovy) build script
