@@ -194,6 +194,12 @@ pipeline {
 						// Mark the designated version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
 						sh "./gradlew -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishDesignatedVersion"
 					}
+
+					// Trigger downstream end to end functional testing (without waiting for it to end)
+					build (
+						job: " Echoe2eFunctionalCertification/${env.BRANCH_NAME}",
+						wait: false
+					)
 				}
 				else {
 					echo 'Skipping VCS tagging as development environment has been observed (for which tags should not be generated)'
