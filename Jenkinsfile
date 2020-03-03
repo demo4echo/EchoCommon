@@ -197,7 +197,7 @@ pipeline {
 
 					// Trigger downstream end to end functional testing (without waiting for it to end)
 					build (
-						job: " Echoe2eFunctionalCertification/${env.BRANCH_NAME}",
+						job: "Echoe2eFunctionalCertification/${env.BRANCH_NAME}",
 						wait: false
 					)
 				}
