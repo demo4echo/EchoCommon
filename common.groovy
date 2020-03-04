@@ -15,7 +15,7 @@ def obtainCurrentBranchName() {
 def manifestVersion(String productionBranchName,String stagingBranchName) {
 	def currentBranchName = obtainCurrentBranchName()
 	def currentVersionName = project.version.toString() // must be done this way since reckon makes project.version non serializable
-	def manifestedVersion = "${insignificantVersionNotation}-${currentBranchName}"
+	def manifestedVersion = "${insignificant_version_notation}-${currentBranchName}"
 
 	// Check if we are to work with a designated version (tag) - in which case use it
 	if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == true && project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == false) {
