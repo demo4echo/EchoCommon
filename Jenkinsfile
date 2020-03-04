@@ -141,7 +141,7 @@ pipeline {
 				}
 			}
 			steps {
-				sh "./gradlew -Preckon.scope=${env.designatedReckonScope} -Preckon.stage=${env.designatedReckonStage} -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} helmUninstall"
+//				sh "./gradlew -Preckon.scope=${env.designatedReckonScope} -Preckon.stage=${env.designatedReckonStage} -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} helmUninstall"
 				sh "./gradlew -Preckon.scope=${env.designatedReckonScope} -Preckon.stage=${env.designatedReckonStage} -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} helmUpdate"
 			}
 		}
