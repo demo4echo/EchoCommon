@@ -11,8 +11,8 @@ ext {
 	productName = project.name
 	productRepository = "${serviceName}/${productName}"
 	productK8ShelmChartsFolder = "k8s${File.separator}helm${File.separator}charts"
-	productionBranchName = envVarsProps.PRODUCTION_BRANCH_NAME_ENV_VAR
-	stagingBranchName = envVarsProps.STAGING_BRANCH_NAME_ENV_VAR
+	productionBranchName = production_branch_name
+	stagingBranchName = staging_branch_name
 	dockerFilePath = project.hasProperty('dockerFilePathOverride') ? "${-> dockerFilePathOverride}" : "${-> common_sub_module_name}${File.separator}Dockerfile"
 	vcsURL = grgit.remote.list()[0].url
 	vcsRevision = grgit.head().id
@@ -58,7 +58,7 @@ task publishVersion(dependsOn: reckonTagPush)
 
 // These properties must be defined after the reckon plugin is set up!
 ext.originalProjectVersionObject = project.version
-ext.productVersion = manifestVersion(envVarsProps.PRODUCTION_BRANCH_NAME_ENV_VAR,envVarsProps.STAGING_BRANCH_NAME_ENV_VAR)
+ext.productVersion = manifestVersion(productionBranchName,stagingBranchName)
 
 // Pre-Defined project properties
 //project.description = 'The Echo demo product'
