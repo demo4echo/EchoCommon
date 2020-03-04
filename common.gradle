@@ -2,8 +2,8 @@
 apply from: "${-> common_sub_module_name}${File.separator}common.groovy"
 
 // Load environment variables
-def envVarsProps = new Properties()
-file("EnvFile.properties").withInputStream { envVarsProps.load(it) }
+//def envVarsProps = new Properties()
+//file("EnvFile.properties").withInputStream { envVarsProps.load(it) }
 
 // Adding some properties
 ext {
