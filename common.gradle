@@ -1,5 +1,5 @@
 // Load common functions
-apply from: "${-> commonSubModuleName}${File.separator}common.groovy"
+apply from: "${-> common_sub_module_name}${File.separator}common.groovy"
 
 // Load environment variables
 def envVarsProps = new Properties()
@@ -13,7 +13,7 @@ ext {
 	productK8ShelmChartsFolder = "k8s${File.separator}helm${File.separator}charts"
 	productionBranchName = envVarsProps.PRODUCTION_BRANCH_NAME_ENV_VAR
 	stagingBranchName = envVarsProps.STAGING_BRANCH_NAME_ENV_VAR
-	dockerFilePath = project.hasProperty('dockerFilePathOverride') ? "${-> dockerFilePathOverride}" : "${-> commonSubModuleName}${File.separator}Dockerfile"
+	dockerFilePath = project.hasProperty('dockerFilePathOverride') ? "${-> dockerFilePathOverride}" : "${-> common_sub_module_name}${File.separator}Dockerfile"
 	vcsURL = grgit.remote.list()[0].url
 	vcsRevision = grgit.head().id
 	vcsAbbreviatedRevision = grgit.head().abbreviatedId
