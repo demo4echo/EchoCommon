@@ -45,6 +45,7 @@ def manifestNamespace() {
 ext {
 	// Constants
 	CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME='demo4echo.designatedTagName'
+	CONST_BRANCH_SPECIFIC_CONFIGURATION_FILE_NAME='branchSpecificConfig.properties'
 
 	// Functions
 	obtainCurrentBranchName = this.&obtainCurrentBranchName
