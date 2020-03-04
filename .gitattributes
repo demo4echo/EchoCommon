@@ -1,1 +1,3 @@
 branchSpecificConfig.properties merge=ours
+/.docker/** merge=ours
+/.kube/** merge=ours
