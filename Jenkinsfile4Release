@@ -108,7 +108,7 @@ pipeline {
 			}
 			steps {
 				// Mark the version as a release one (stage should be 'final')
-				sh "./gradlew -Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} -Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
+				sh "./gradlew -Preckon.scope=${env.designatedReckonScope} -Preckon.stage=${env.designatedReckonStage} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishVersion"
 			}
 		}
 		stage('\u2777 Stamp Designated Release \u2728') {
