@@ -1,5 +1,5 @@
 // In this section you declare where to find the dependencies of your project
-//import org.ajoberstar.grgit.Person
+import org.ajoberstar.grgit.Person
 
 //allprojects {
 //initscript { 
@@ -13,7 +13,7 @@ gradle.projectsLoaded {
 			}
 
 			dependencies {
-				classpath 'org.ajoberstar:grgit:1.7.2'
+				classpath 'org.ajoberstar:grgit:1.7.3333332'
 			}
 		}
 	}
