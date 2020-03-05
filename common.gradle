@@ -1,14 +1,10 @@
-//import org.ajoberstar.grgit.Person
+import org.ajoberstar.grgit.Person
 
-//buildscript {
-//	repositories {
-//		mavenCentral()
-//	}
-	
-//	dependencies {
-//		classpath group:'org.ajoberstar',name:'grgit',version:'1.7.2'
-//	}
-//}
+buildscript {
+	dependencies {
+		classpath 'org.ajoberstar:grgit:1.7.2'
+	}
+}
 
 // Load common functions
 apply from: "${-> common_sub_module_name}${File.separator}common.groovy"
