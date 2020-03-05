@@ -195,10 +195,10 @@ pipeline {
 						sh "./gradlew -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishDesignatedVersion"
 					}
 
-					// Trigger downstream end to end functional testing (without waiting for it to end)
+					// Trigger downstream end to end functional testing (wait for it to end since its failure should fail this build as well)
 					build (
 						job: "Echoe2eFunctionalCertification/${env.BRANCH_NAME}",
-						wait: false
+						wait: true
 					)
 				}
 				else {
