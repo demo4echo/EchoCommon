@@ -371,10 +371,6 @@ task designatedTagCreate {
 			message = "Release of ${name}"
 			force = true
 //			tagger = new Person(vcsUsername,vcsUseremail)
-			tagger {
-				name = vcsUsername
-				email = vcsUseremail
-			}
 		}
 		
 		println "Designated tag cretaed: ${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}"
