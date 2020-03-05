@@ -1,15 +1,20 @@
 // In this section you declare where to find the dependencies of your project
 //import org.ajoberstar.grgit.Person
 
-allprojects {
+//allprojects {
 //initscript { 
-	repositories {
-		// Use 'jcenter' for resolving your dependencies.
-		// You can declare any Maven/Ivy/file repository here.
-		jcenter()
-	}
+gradle.projectsLoaded {
+	rootProject.allprojects {
+		buildscript {
+			repositories {
+				// Use 'jcenter' for resolving your dependencies.
+				// You can declare any Maven/Ivy/file repository here.
+				jcenter()
+			}
 
-	dependencies {
-		classpath 'org.ajoberstar:grgit:1.7.2'
+			dependencies {
+				classpath 'org.ajoberstar:grgit:1.7.2'
+			}
+		}
 	}
 }
