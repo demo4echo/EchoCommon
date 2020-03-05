@@ -1,16 +1,16 @@
-import org.ajoberstar.grgit.Person
+//import org.ajoberstar.grgit.Person
 
-buildscript {
-	repositories {
+//buildscript {
+//	repositories {
 		// Use 'jcenter' for resolving your dependencies.
 		// You can declare any Maven/Ivy/file repository here.
-		jcenter()
-	}
+//		jcenter()
+//	}
 
-	dependencies {
-		classpath 'org.ajoberstar.grgit:grgit-core:4.0.1'
-	}
-}
+//	dependencies {
+//		classpath 'org.ajoberstar.grgit:grgit-core:4.0.1'
+//	}
+//}
 
 // Load common functions
 apply from: "${-> common_sub_module_name}${File.separator}common.groovy"
@@ -370,7 +370,11 @@ task designatedTagCreate {
 			name = project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]
 			message = "Release of ${name}"
 			force = true
-			tagger = new Person(vcsUsername,vcsUseremail)
+//			tagger = new Person(vcsUsername,vcsUseremail)
+			tagger {
+				name = vcsUsername
+				email = vcsUseremail
+			}
 		}
 		
 		println "Designated tag cretaed: ${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}"
