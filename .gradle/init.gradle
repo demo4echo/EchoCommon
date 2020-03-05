@@ -1,5 +1,5 @@
 // In this section you declare where to find the dependencies of your project
-import org.ajoberstar.grgit.Person
+//import org.ajoberstar.grgit.Person
 
 //allprojects {
 //initscript { 
