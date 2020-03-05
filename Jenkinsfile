@@ -92,10 +92,11 @@ pipeline {
 				sh 'echo PATH value is: [$PATH]'
 				sh 'echo PWD value is: [$PWD]'
 
-				sh "mkdir -p /root/.docker && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.docker /root"
-				sh "mkdir -p /root/.kube && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.kube /root"
-				sh "mkdir -p /root/.gradle && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.gradle/gradle.properties /root/.gradle"
-				sh "mkdir -p /root/.gradle && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.gradle/init.gradle /root/.gradle"
+				sh "mkdir -p /root/.docker && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.setup/.docker /root"
+				sh "mkdir -p /root/.kube && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.setup/.kube /root"
+				sh "mkdir -p /root/.gradle && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.setup/.gradle /root"
+//				sh "mkdir -p /root/.gradle && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.setup/.gradle/gradle.properties /root/.gradle"
+//				sh "mkdir -p /root/.gradle && cp -ar ./${env.COMMON_SUB_MODULE_FOLDER_NAME_ENV_VAR}/.setup/.gradle/init.gradle /root/.gradle"
 
 				script {
 					// Ensure target namespace is resolved
