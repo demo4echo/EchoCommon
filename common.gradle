@@ -1,20 +1,16 @@
-//buildscript {
-//	repositories {
+import org.ajoberstar.grgit.Person
+
+buildscript {
+	repositories {
 		// Use 'jcenter' for resolving your dependencies.
 		// You can declare any Maven/Ivy/file repository here.
-//		jcenter()
-//	}
+		jcenter()
+	}
 
-//	dependencies {
-//		classpath 'org.ajoberstar:grgit:1.7.2'
-//	}
-//}
-
-plugins {
-	id 'org.ajoberstar.grgit' apply false
+	dependencies {
+		classpath 'org.ajoberstar:grgit-core:4.0.1'
+	}
 }
-
-import org.ajoberstar.grgit.Person
 
 // Load common functions
 apply from: "${-> common_sub_module_name}${File.separator}common.groovy"
