@@ -360,7 +360,7 @@ task printTags {
 		def tags = grgit.tag.list()
 
 		tags.each {
-			println "Observing tag: [$it.getName()]"
+			println "Observing tag with name: [$it.name] and full name: [$it.fullName]"
 		}
 	}
 }
