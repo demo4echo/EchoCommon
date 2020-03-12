@@ -358,9 +358,15 @@ task helmTestAndClean(type:Exec) {
 task printTags {
 	doLast {
 		def tags = grgit.tag.list()
+		def sortedTags = tags.sort {
+			it.dateTime
+		}
 
 		tags.each {
-			println "Observing tag with name: [$it.name] and full name: [$it.fullName]"
+			println "Observing no sort tag with name: [$it.name] and full name: [$it.fullName]"
+		}
+		sortedTags.each {
+			println "Observing after sort tag with name: [$it.name] and full name: [$it.fullName]"
 		}
 	}
 }
