@@ -355,6 +355,16 @@ task helmTestAndClean(type:Exec) {
 // Works with org.ajoberstar.grgit plugin
 //
 
+task printExistingVcsTags {
+	doLast {
+		def tags = grgit.tag.list()
+
+		tags.each {
+			println "Observing tag: [$it]"
+		}
+	}
+}
+
 task designatedTagCreate {
 	description = 'Tags the current head with a designated name'
 	
