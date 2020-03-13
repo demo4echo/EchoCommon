@@ -357,7 +357,10 @@ task helmTestAndClean(type:Exec) {
 
 task designatedTagCreate {
 	description = 'Tags the current head with a designated name'
-	
+
+	def tagName = null
+	def tagMessage = null
+
 	doFirst {
 		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isEmpty() == true)
 		{
