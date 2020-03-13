@@ -443,6 +443,7 @@ task printApplicableVersion {
 	}
 }
 
+// The most recent version that exists in the VCS (last generated tag)
 task printLatestVersion {
 	doLast {
 		def tags = grgit.tag.list()
