@@ -68,6 +68,11 @@ pipeline {
 			3. This will void the use of the 'TARGET_RECKON_SCOPE' and 'TARGET_RECKON_STAGE' parameters!
 			"""
 		)
+		string (
+			name: 'DESIGNATED_VERSION_MESSAGE',
+			defaultValue: pipelineCommon.PARAMS_DESIGNATED_VERSION_MESSAGE_DEFAULT_VALUE,
+			description: 'If applicable (and only for designated version), place a message that will be attached to the designated version (e.g. a customer name)'
+		)
 	}	
 	environment {
 		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per branch)
@@ -183,7 +188,7 @@ pipeline {
 					}
 					else {
 						// Mark the designated version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
-						sh "./gradlew -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishDesignatedVersion"
+						sh "./gradlew -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} -Pdemo4echo.designatedTagMessage=${params.DESIGNATED_VERSION_MESSAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishDesignatedVersion"
 					}
 
 					// Trigger downstream end to end functional testing (wait for it to end since its failure should fail this build as well)
