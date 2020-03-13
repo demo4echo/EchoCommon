@@ -90,7 +90,7 @@ pipeline {
 				-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
 				-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
 				printLatestVersion | \
-				grep Latest | \
+				grep Recent | \
 				awk '{print \$3}'",
 			returnStdout: true
 		)
