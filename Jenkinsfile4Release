@@ -113,10 +113,10 @@ pipeline {
 			}
 			steps {
 				// Mark the version as a release one (stage should be 'final')
-				sh "./gradlew
-					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}
-					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE}
-					-Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN}
+				sh "./gradlew \
+					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+					-Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} \
 					publishVersion"
 			}
 		}
@@ -128,10 +128,10 @@ pipeline {
 			}
 			steps {
 				// Mark the version according to a designated (specific) one (bypass reckon plugin)
-				sh "./gradlew
-					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION}
-					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}'
-					-Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN}
+				sh "./gradlew \
+					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+					-Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} \
 					publishDesignatedVersion"
 			}
 		}

@@ -128,12 +128,12 @@ pipeline {
 		}
 		stage('\u2778 package \u2728') {//\u1F4E6
 			steps {
-				sh """./gradlew
-					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}
-					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE}
-					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION}
-					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}'
-					helmPackage""" // helmPackageAndPublish
+				sh "./gradlew \
+					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+					helmPackage" // helmPackageAndPublish
 			}
 		}
 		stage('\u2779 install \u2728') {//\u1F3F4
@@ -141,18 +141,18 @@ pipeline {
 				environment name: 'CLOUD_NAME', value: 'development'
 			}
 			steps {
-				sh """./gradlew
-					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}
-					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE}
-					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION}
-					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}'
-					helmUpdate"""
-				sh """./gradlew
-					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}
-					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE}
-					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION}
-					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}'
-					helmTestAndClean"""
+				sh "./gradlew \
+					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+					helmUpdate"
+				sh "./gradlew \
+					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+					helmTestAndClean"
 			}
 		}
 		stage('\u277A upgrade \u2728') {//\u1F3F4
@@ -162,34 +162,34 @@ pipeline {
 				}
 			}
 			steps {
-//				sh """./gradlew
-//					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}
-//					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE}
-//					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION}
-//					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}'
-//					helmUninstall"""
-				sh """./gradlew
-					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}
-					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE}
-					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION}
-					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}'
-					helmUpdate"""
-				sh """./gradlew
-					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}
-					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE}
-					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION}
-					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}'
-					helmTestAndClean"""
+//				sh "./gradlew \
+//					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+//					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+//					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+//					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+//					helmUninstall"
+				sh "./gradlew \
+					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+					helmUpdate"
+				sh "./gradlew \
+					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+					helmTestAndClean"
 			}
 		}
 		stage('\u277B certify \u2728') {//\u1F321
 			steps {
-				sh """./gradlew
-					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}
-					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE}
-					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION}
-					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}'
-					certify"""
+				sh "./gradlew \
+					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+					certify"
 			}
 		}
 		stage('\u277C uninstall \u2728') {//\u1F3F3
@@ -197,12 +197,12 @@ pipeline {
 				environment name: 'CLOUD_NAME', value: 'development'
 			}
 			steps {
-				sh """./gradlew
-					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}
-					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE}
-					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION}
-					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}'
-					helmUninstall"""
+				sh "./gradlew \
+					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+					helmUninstall"
 			}
 		}
 		stage('\u277D cleanup \u2728') {
@@ -230,19 +230,19 @@ pipeline {
 				if (env.CLOUD_NAME != 'development') {
 					if (params.DESIGNATED_VERSION.trim().isEmpty() == true) {
 						// Mark the version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
-						sh """./gradlew
-							-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}
-							-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE}
-							-Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN}
-							publishVersion"""
+						sh "./gradlew \
+							-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+							-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+							-Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} \
+							publishVersion"
 					}
 					else {
 						// Mark the designated version (done at the end, otherwise all other stages apart from the first one will get other version numbers)
-						sh """./gradlew
-							-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION}
-							-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}'
-							-Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN}
-							publishDesignatedVersion"""
+						sh "./gradlew \
+							-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+							-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+							-Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} \
+							publishDesignatedVersion"
 					}
 
 					// Trigger downstream end to end functional testing (wait for it to end since its failure should fail this build as well)
