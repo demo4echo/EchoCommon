@@ -127,7 +127,7 @@ pipeline {
 					// Test
 					def latestVersion = sh (script: "echo `./gradlew printLatestVersion | grep Recent | awk '{print \$3}'`",returnStdout: true)
 					println "The latest version is: [${latestVersion}]"
-					print ln "The length of the latest version is: [${latestVersion.size()}]"
+					println "The length of the latest version is: [${latestVersion.size()}]"
 				}
 			}
 		}
