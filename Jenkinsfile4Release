@@ -84,17 +84,6 @@ pipeline {
 
 		// Obtain the most recent version
 		X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR = sh (script: "./gradlew printLatestVersion | grep Recent | awk '{print \$3}'",returnStdout: true)
-//		X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR = sh (
-//			script: "./gradlew \
-//				-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
-//				-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
-//				-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
-//				-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
-//				printLatestVersion | \
-//				grep Recent | \
-//				awk '{print \$3}'",
-//			returnStdout: true
-//		)
 	}
 	stages {
 		stage('\u2776 setup \u2728') {
@@ -131,8 +120,14 @@ pipeline {
 				} 
 			}
 			steps {
-				// Pseodu stage (should push latest Docker image and Helm chart to external repository)
-				echo "Latest version is: [${env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR}]"
+				script {
+					// Pseodu stage (should push latest Docker image and Helm chart to external repository)
+					echo "Latest version is: [${env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR}]"
+
+					// Test
+					def latestVersion = sh (script: "./gradlew printLatestVersion | grep Recent | awk '{print \$3}'",returnStdout: true)
+					println "The latest version is: [${latestVersion}]"
+				}
 			}
 		}
 	}
