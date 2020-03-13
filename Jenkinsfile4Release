@@ -123,7 +123,7 @@ pipeline {
 			}
 			steps {
 				// Mark the version according to a designated (specific) one (bypass reckon plugin)
-				sh "./gradlew -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishDesignatedVersion"
+				sh "./gradlew -Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} -Pdemo4echo.designatedTagMessage=${params.DESIGNATED_VERSION_MESSAGE} -Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} publishDesignatedVersion"
 			}
 		}
 	}
