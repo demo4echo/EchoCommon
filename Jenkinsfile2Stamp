@@ -69,6 +69,11 @@ pipeline {
 			defaultValue: pipelineCommon.PARAMS_DESIGNATED_VERSION_MESSAGE_DEFAULT_VALUE,
 			description: 'If applicable (and only for designated version), place a message that will be attached to the designated version (e.g. a customer name)'
 		)
+		booleanParam (
+			name: 'PUBLISH_LATEST_ARTIFACTS',
+			defaultValue: pipelineCommon.PARAMS_PUBLISH_LATEST_ARTIFACTS_DEFAULT_VALUE,
+			description: 'If selected (and applicable only for Jenkins4Release), publishes the latest artifacts to production/customer repositories'
+		)
 	}
 	environment {
 		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per branch)

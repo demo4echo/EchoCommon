@@ -69,6 +69,11 @@ pipeline {
 			defaultValue: pipelineCommon.PARAMS_DESIGNATED_VERSION_MESSAGE_DEFAULT_VALUE,
 			description: 'If applicable (and only for designated version), place a message that will be attached to the designated version (e.g. a customer name)'
 		)
+		booleanParam (
+			name: 'PUBLISH_LATEST_ARTIFACTS',
+			defaultValue: pipelineCommon.PARAMS_PUBLISH_LATEST_ARTIFACTS_DEFAULT_VALUE,
+			description: 'If selected (and applicable only for Jenkins4Release), publishes the latest artifacts to production/customer repositories'
+		)
 	}
 	environment {
 		// We use this dummy environment variable to load all the properties from the designated file into environment variable (per branch)
@@ -76,6 +81,19 @@ pipeline {
 
 		// Obtain the access token Jenkins uses to connect to GitHub (using a Jenkins credentials ID)
 		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
+
+		// Obtain the most recent version
+		X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR = sh (
+			script: "./gradlew \
+				-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+				-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+				-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+				-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+				printLatestVersion | \
+				grep Latest | \
+				awk '{print \$3}'",
+			returnStdout: true
+		)
 	}
 	stages {
 		stage('\u2776 setup \u2728') {
@@ -105,34 +123,15 @@ pipeline {
 //				sleep 300
 			}
 		}
-		stage('\u2777 Stamp Release \u2728') {
+		stage('\u2777 Publish Latest Artifacts \u2728') {
 			when { 
 				expression { 
-					params.DESIGNATED_VERSION.trim().isEmpty() == true 
+					params.PUBLISH_LATEST_ARTIFACTS == true 
 				} 
 			}
 			steps {
-				// Mark the version as a release one (stage should be 'final')
-				sh "./gradlew \
-					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
-					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
-					-Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} \
-					publishVersion"
-			}
-		}
-		stage('\u2777 Stamp Designated Release \u2728') {
-			when { 
-				expression { 
-					params.DESIGNATED_VERSION.trim().isEmpty() == false 
-				} 
-			}
-			steps {
-				// Mark the version according to a designated (specific) one (bypass reckon plugin)
-				sh "./gradlew \
-					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
-					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
-					-Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} \
-					publishDesignatedVersion"
+				// Pseodu stage (should push latest Docker image and Helm chart to external repository)
+				echo "Latest version is: [${env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR}]"
 			}
 		}
 	}
