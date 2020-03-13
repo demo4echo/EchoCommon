@@ -355,22 +355,6 @@ task helmTestAndClean(type:Exec) {
 // Works with org.ajoberstar.grgit plugin
 //
 
-task printTags {
-	doLast {
-		def tags = grgit.tag.list()
-		def sortedTags = tags.sort {
-			it.dateTime
-		}
-
-		tags.each {
-			println "Observing no sort tag with name: [$it.name] and full name: [$it.fullName] and date time: [$it.dateTime]"
-		}
-		sortedTags.each {
-			println "Observing after sort tag with name: [$it.name] and full name: [$it.fullName] and date time: [$it.dateTime]"
-		}
-	}
-}
-
 task designatedTagCreate {
 	description = 'Tags the current head with a designated name'
 	
@@ -456,5 +440,14 @@ task printApplicableVersion {
 		}
 
 		println "Prime version: ${applicableVersionName}"
+	}
+}
+
+task printLatestVersion {
+	doLast {
+		def tags = grgit.tag.list()
+		def latestTag = tags.last()
+
+		println "Latest version: ${latestTag}"
 	}
 }
