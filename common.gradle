@@ -201,7 +201,8 @@ task stopKubectlPortForwarding(type: KillProcessTask) {
 
 docker {
 	name "${productName}:${productVersion}"
-	tag "privateRegistry", "${productRepository}:${productVersion}"	// For DockerHub registry
+	tag "dockerHub", "${productRepository}:${productVersion}"	// For DockerHub registry
+//	tag "tmeltser", "tmeltser/demo4echo:${productVersion}"	// For DockerHub registry
 	dockerfile file(dockerFilePath)
 	buildArgs([
 		SERVICE_NAME: serviceName,
@@ -233,7 +234,7 @@ dockerRun {
 }
 
 // Main task used from docker plugins
-task dockerBuildAndPublish(dependsOn: 'dockerPushPrivateRegistry')
+task dockerBuildAndPublish(dependsOn: 'dockerPushDockerHub')
 
 // Give an alias to dockerRun task
 task dockerStart(dependsOn: ['dockerBuild','dockerRun'])

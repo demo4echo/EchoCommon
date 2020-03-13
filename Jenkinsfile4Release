@@ -107,7 +107,7 @@ pipeline {
 				//
 				// Update build name and description (but in this case no need to add the version to the build name)
 				//
-				updateBuildInformation(assimilateVersionIntoBuildName: false)
+				updateBuildInformation(false)
 
 				// For Debug Only!
 //				sleep 300
