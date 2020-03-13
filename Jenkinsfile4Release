@@ -119,7 +119,7 @@ pipeline {
 			steps {
 				script {
 					// Obtain the most recent version
-					def latestVersion = sh (script: "echo `./gradlew printLatestVersion | grep Recent | awk '{print \$3}'`",returnStdout: true)
+					def latestVersion = sh (script: "./gradlew printLatestVersion | grep Recent | awk '{print \$3}'",returnStdout: true)
 					
 					// Ommiting the trailing EOL and keeping it in an environment variable
 					env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR = latestVersion[0..-2]
