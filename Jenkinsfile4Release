@@ -106,6 +106,18 @@ pipeline {
 				//
 				updateBuildInformation(false)
 
+				// Capture the latest version into an environment variable
+				script {
+					// Obtain the most recent version
+					def latestVersion = sh (script: "./gradlew printLatestVersion | grep Recent | awk '{print \$3}'",returnStdout: true)
+					
+					// Ommiting the trailing EOL and keeping it in an environment variable
+					env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR = latestVersion[0..-2]
+
+					// Print it
+					echo "Captured latest version as: [${env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR}]"
+				}
+
 				// For Debug Only!
 //				sleep 300
 			}
@@ -117,16 +129,8 @@ pipeline {
 				} 
 			}
 			steps {
-				script {
-					// Obtain the most recent version
-					def latestVersion = sh (script: "./gradlew printLatestVersion | grep Recent | awk '{print \$3}'",returnStdout: true)
-					
-					// Ommiting the trailing EOL and keeping it in an environment variable
-					env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR = latestVersion[0..-2]
-
-					// Pseodu stage (should push latest Docker image and Helm chart to external repository)
-					echo "Latest version is: [${env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR}]"
-				}
+				// Pseodu stage (should push latest Docker image and Helm chart to external repository)
+				echo "*** Pseodu performing this stage ***"
 			}
 		}
 	}
