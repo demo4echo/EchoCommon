@@ -81,9 +81,6 @@ pipeline {
 
 		// Obtain the access token Jenkins uses to connect to GitHub (using a Jenkins credentials ID)
 		GITHUB_ACCESS_TOKEN = credentials('github-demo4echo-access-token-for-reckon-gradle-plugin-id')
-
-		// Obtain the most recent version
-//		X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR = sh (script: "./gradlew printLatestVersion | grep Recent | awk '{print \$3}'",returnStdout: true)
 	}
 	stages {
 		stage('\u2776 setup \u2728') {
@@ -121,14 +118,14 @@ pipeline {
 			}
 			steps {
 				script {
-					// Test
+					// Obtain the most recent version
 					def latestVersion = sh (script: "echo `./gradlew printLatestVersion | grep Recent | awk '{print \$3}'`",returnStdout: true)
-					println "The latest version is: [${latestVersion[0..-2]}]"
-					println "The length of the latest version is: [${latestVersion.size()}]"
+					
+					// Ommiting the trailing EOL and keeping it in an environment variable
 					env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR = latestVersion[0..-2]
 
 					// Pseodu stage (should push latest Docker image and Helm chart to external repository)
-					echo "New latest version is: [${env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR}]"
+					echo "Latest version is: [${env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR}]"
 				}
 			}
 		}
