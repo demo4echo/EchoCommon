@@ -118,12 +118,12 @@ pipeline {
 		}
 		stage('\u2777 build \u2728') {//\u1F6E0
 			steps {
-				sh (script: """./gradlew
-					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE}
-					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE}
-					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION}
-					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}'
-					dockerBuildAndPublish""")
+				sh "./gradlew \
+					-Preckon.scope=${env.JENKINS_SLAVE_K8S_RECKON_SCOPE} \
+					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
+					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
+					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
+					dockerBuildAndPublish"
 			}
 		}
 		stage('\u2778 package \u2728') {//\u1F4E6
