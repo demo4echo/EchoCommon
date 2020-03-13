@@ -447,8 +447,8 @@ task printApplicableVersion {
 task printLatestVersion {
 	doLast {
 		def tags = grgit.tag.list()
-		def latestTag = tags.last().name
+		def latestTagName = tags.last().name
 
-		println "Latest version: ${latestTag}"
+		println "Latest version: ${latestTagName}"
 	}
 }
