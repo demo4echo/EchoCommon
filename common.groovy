@@ -55,7 +55,7 @@ ext {
 
 	// Functions
 	obtainCurrentBranchName = this.&obtainCurrentBranchName
-	obtainLatestTagName = this.&obtainLatestTagName
+	obtainLatestTag = this.&obtainLatestTag
 	manifestVersion = this.&manifestVersion
 	manifestNamespace = this.&manifestNamespace
 }
