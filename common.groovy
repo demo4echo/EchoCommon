@@ -7,9 +7,9 @@ def obtainCurrentBranchName() {
 	return grgit.branch.current.name
 }
 
-// Returns the latest tag/version name from git
-def obtainLatestTagName() {
-	return grgit.tag.list().last().name
+// Returns the latest tag/version from git
+def obtainLatestTag() {
+	return grgit.tag.list().last()
 }
 
 //

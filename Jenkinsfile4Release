@@ -108,9 +108,15 @@ pipeline {
 
 				// Capture the latest version into an environment variable
 				script {
-					// Obtain the most recent version
-					def latestVersion = sh (script: "./gradlew printLatestVersion | grep Recent | awk '{print \$3}'",returnStdout: true)
+					// Obtain the most recent version information
+					def latestVersionInfo = sh (script: "./gradlew printLatestVersion | grep Recent | awk '{print \$3}'",returnStdout: true)
 					
+					// Seperate to version name and date-time
+					def (latestVersionName,latestVersionDateTime) = latestVersionInfo.tokenize('@')
+
+					echo "Latest version name is: [${latestVersionName}]"
+					echo "Latest version date-time is: [${latestVersionDateTime}]"
+
 					// Ommiting the trailing EOL and keeping it in an environment variable
 					env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR = latestVersion[0..-2]
 

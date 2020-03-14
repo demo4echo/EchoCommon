@@ -459,8 +459,10 @@ task printApplicableVersion {
 // The most recent version that exists in the VCS (last generated tag)
 task printLatestVersion {
 	doLast {
-		def latestTagName = obtainLatestTagName()
+		def latestTag = obtainLatestTag()
+		def latestTagName = latestTag.name
+		def latestTagDateTime = latestTag.dateTime
 
-		println "Recent version: ${latestTagName}"
+		println "Recent version: ${latestTagName}@${latestTagDateTime}"
 	}
 }
