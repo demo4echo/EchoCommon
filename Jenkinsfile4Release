@@ -114,14 +114,13 @@ pipeline {
 					// Seperate to version name and date-time
 					def (latestVersionName,latestVersionDateTime) = latestVersionInfo.tokenize('@')
 
-					echo "Latest version name is: [${latestVersionName}]"
-					echo "Latest version date-time is: [${latestVersionDateTime}]"
-
-					// Ommiting the trailing EOL and keeping it in an environment variable
-					env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR = latestVersion[0..-2]
+					// Save information in environment variables (while ommiting the trailing EOL in the second (laat) element)
+					env.X_EFRAT_ECHO_LATEST_VERSION_NAME_ENV_VAR = latestVersionName
+					env.X_EFRAT_ECHO_LATEST_VERSION_DATE_TIME_ENV_VAR = latestVersionDateTime[0..-2]
 
 					// Print it
-					echo "Captured latest version as: [${env.X_EFRAT_ECHO_LATEST_VERSION_ENV_VAR}]"
+					echo "Captured latest version name as: [${env.X_EFRAT_ECHO_LATEST_VERSION_NAME_ENV_VAR}]"
+					echo "Captured latest version date-time as: [${env.X_EFRAT_ECHO_LATEST_VERSION_DATE_TIME_ENV_VAR}]"
 				}
 
 				// For Debug Only!
