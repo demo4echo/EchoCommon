@@ -17,7 +17,7 @@ def obtainLatestTagName() {
 //
 
 // Builds a proper version name
-def manifestVersion(String productionBranchName,String stagingBranchName) {
+def manifestVersion() {
 	def currentBranchName = obtainCurrentBranchName()
 	def currentVersionName = project.version.toString() // must be done this way since reckon makes project.version non serializable
 	def manifestedVersion = "${insignificant_version_notation}-${currentBranchName}"
@@ -27,7 +27,7 @@ def manifestVersion(String productionBranchName,String stagingBranchName) {
 		manifestedVersion = "${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}-${currentBranchName}"
 	}
 	// Otherwise check if the version should be significant (in which case use reckon based version (tag))
-	else if (currentBranchName == productionBranchName || currentBranchName == stagingBranchName) {
+	else if (currentBranchName == production_branch_name || currentBranchName == staging_branch_name) {
 		manifestedVersion = "${currentVersionName}-${currentBranchName}"
 	}
 
@@ -39,7 +39,7 @@ def manifestNamespace() {
 	def namespace = obtainCurrentBranchName()
 
 	// If we are on the production or staging branches return the regular name ($serviceName), else return the branch name itself
-	if (namespace == "${productionBranchName}" || namespace == "${stagingBranchName}") {
+	if (namespace == production_branch_name || namespace == staging_branch_name) {
 		namespace = serviceName
 	}
 	
