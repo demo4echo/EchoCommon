@@ -20,7 +20,7 @@ def obtainLatestTag() {
 def manifestVersion() {
 	def currentBranchName = obtainCurrentBranchName()
 	def currentVersionName = project.version.toString() // must be done this way since reckon makes project.version non serializable
-	def dockerSafeTagName = currentVersionName.replace(CONST_UNSAFE_CHARACTER_FOR DOCKER_TAG_NAME,CONST_SAFE_CHARACTER_REPLACER_FOR DOCKER_TAG_NAME)
+	def dockerSafeTagName = currentVersionName.replace(CONST_UNSAFE_CHARACTER_FOR_DOCKER_TAG_NAME,CONST_SAFE_CHARACTER_REPLACER_FOR_DOCKER_TAG_NAME)
 	def manifestedVersion = "${insignificant_version_notation}-${currentBranchName}"
 
 	// Check if we are to work with a designated version (tag) - in which case use it
@@ -62,7 +62,7 @@ def obtainApplicableVersionName() {
 // Checks if the applicable version marks a significant version or not
 def isSignificantVersion() {
 	def applicableVersionName = obtainApplicableVersionName()
-	def isSignificantVersion = (applicableVersionName.contains(CONST_SAFE_CHARACTER_REPLACER_FOR DOCKER_TAG_NAME) == false && applicableVersionName.contains(CONST_UNSAFE_CHARACTER_FOR DOCKER_TAG_NAME) == false)
+	def isSignificantVersion = (applicableVersionName.contains(CONST_SAFE_CHARACTER_REPLACER_FOR_DOCKER_TAG_NAME) == false && applicableVersionName.contains(CONST_UNSAFE_CHARACTER_FOR_DOCKER_TAG_NAME) == false)
 
 	return isSignificantVersion
 }
@@ -73,8 +73,8 @@ ext {
 	CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME='demo4echo.designatedTagName'
 	CONST_DESIGNATED_TAG_MESSAGE_PROJECT_PROPERTY_NAME='demo4echo.designatedTagMessage'
 	CONST_BRANCH_SPECIFIC_CONFIGURATION_FILE_NAME='branchSpecificConfig.properties'
-	CONST_UNSAFE_CHARACTER_FOR DOCKER_TAG_NAME='+'
-	CONST_SAFE_CHARACTER_REPLACER_FOR DOCKER_TAG_NAME='_'
+	CONST_UNSAFE_CHARACTER_FOR_DOCKER_TAG_NAME='+'
+	CONST_SAFE_CHARACTER_REPLACER_FOR_DOCKER_TAG_NAME='_'
 
 	// Functions
 	obtainCurrentBranchName = this.&obtainCurrentBranchName
