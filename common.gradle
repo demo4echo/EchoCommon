@@ -173,11 +173,11 @@ test {
 }
 
 // Can only be used within the cluster as the ecfobe doesn't expose external interfaces
-task certify(dependsOn: 'test')
+task certify(dependsOn: test)
 
 // Special test task meant to run manually outside the cluster (development mode) and since the service isn't published outside
 // the cluster, we'll need kubectl port forwarding
-task testViaPortForwarding(dependsOn: ['startKubectlPortForwarding','test','stopKubectlPortForwarding']) {
+task testViaPortForwarding(dependsOn: [startKubectlPortForwarding,test,stopKubectlPortForwarding]) {
 	test.mustRunAfter startKubectlPortForwarding
 
 	stopKubectlPortForwarding.mustRunAfter test
@@ -224,7 +224,7 @@ docker {
 }
 
 // Give an alias to docker task
-task dockerBuild(dependsOn: ['docker'])
+task dockerBuild(dependsOn: [docker])
 
 dockerRun {
 	name "${productName}"
@@ -236,11 +236,11 @@ dockerRun {
 }
 
 // Main task used from docker plugins
-task dockerBuildAndPublish(dependsOn: 'dockerTagsPush')
-//task dockerBuildAndPublishForPrivateRegistry(dependsOn: 'dockerPushPrivateRegistry')
+task dockerBuildAndPublish(dependsOn: dockerTagsPush)
+//task dockerBuildAndPublishForPrivateRegistry(dependsOn: dockerPushPrivateRegistry)
 
 // Give an alias to dockerRun task
-task dockerStart(dependsOn: ['dockerBuild','dockerRun']) {
+task dockerStart(dependsOn: [dockerBuild,dockerRun]) {
 	dockerRun.mustRunAfter dockerBuild
 }
 
@@ -340,8 +340,8 @@ helm {
 //	}
 }
 
-task helmUpdate(dependsOn: 'helmInstall')
-task helmUninstall(dependsOn: 'helmDelete')
+task helmUpdate(dependsOn: helmInstall)
+task helmUninstall(dependsOn: helmDelete)
 
 task helmTest(type:Exec) {
 	executable "helm"
