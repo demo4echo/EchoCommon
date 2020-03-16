@@ -240,7 +240,7 @@ task dockerBuildAndPublish(dependsOn: dockerTagsPush)
 //task dockerBuildAndPublishForPrivateRegistry(dependsOn: dockerPushPrivateRegistry)
 
 // Give an alias to dockerRun task
-task dockerStart(dependsOn: [dockerBuild,dockerRun]) {
+task dockerStart(dependsOn: ['dockerBuild','dockerRun']) {
 //	dockerRun.mustRunAfter dockerBuild
 }
 
