@@ -20,6 +20,7 @@ def obtainLatestTag() {
 def manifestVersion() {
 	def currentBranchName = obtainCurrentBranchName()
 	def currentVersionName = project.version.toString() // must be done this way since reckon makes project.version non serializable
+	def dockerSafeVersionName = currentVersionName.replace("+","_")
 	def manifestedVersion = "${insignificant_version_notation}-${currentBranchName}"
 
 	// Check if we are to work with a designated version (tag) - in which case use it
@@ -28,7 +29,7 @@ def manifestVersion() {
 	}
 	// Otherwise check if the version should be significant (in which case use reckon based version (tag))
 	else if (currentBranchName == production_branch_name || currentBranchName == staging_branch_name) {
-		manifestedVersion = "${currentVersionName}-${currentBranchName}"
+		manifestedVersion = "${dockerSafeVersionName}-${currentBranchName}"
 	}
 
 	return manifestedVersion
