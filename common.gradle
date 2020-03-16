@@ -23,7 +23,7 @@ file(CONST_BRANCH_SPECIFIC_CONFIGURATION_FILE_NAME).withInputStream { branchSpec
 ext {
 	serviceName = service_name
 	productName = project.name
-	productRepository = isSignificantVersion() == true ? "${serviceName}/${productName}" : "${productName}"
+	productRepository = "${serviceName}/${productName}"
 	productK8ShelmChartsFolder = "k8s${File.separator}helm${File.separator}charts"
 	dockerFilePath = project.hasProperty('dockerFilePathOverride') ? "${-> dockerFilePathOverride}" : "${-> common_sub_module_name}${File.separator}Dockerfile"
 	vcsURL = grgit.remote.list()[0].url
