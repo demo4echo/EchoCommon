@@ -175,14 +175,6 @@ test {
 // Can only be used within the cluster as the ecfobe doesn't expose external interfaces
 task certify(dependsOn: test)
 
-// Special test task meant to run manually outside the cluster (development mode) and since the service isn't published outside
-// the cluster, we'll need kubectl port forwarding
-task testViaPortForwarding(dependsOn: [startKubectlPortForwarding,test,stopKubectlPortForwarding]) {
-	test.mustRunAfter startKubectlPortForwarding
-
-	stopKubectlPortForwarding.mustRunAfter test
-}
-
 //
 // Deal with kubectl port-forward blocking command
 //
@@ -195,6 +187,14 @@ task startKubectlPortForwarding(type: SpawnProcessTask) {
 
 task stopKubectlPortForwarding(type: KillProcessTask) {
 //	pidLockFileName '.other.pid.lock'
+}
+
+// Special test task meant to run manually outside the cluster (development mode) and since the service isn't published outside
+// the cluster, we'll need kubectl port forwarding
+task testViaPortForwarding(dependsOn: [startKubectlPortForwarding,test,stopKubectlPortForwarding]) {
+	test.mustRunAfter startKubectlPortForwarding
+
+	stopKubectlPortForwarding.mustRunAfter test
 }
 
 //
