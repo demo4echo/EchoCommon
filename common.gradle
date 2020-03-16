@@ -238,12 +238,12 @@ dockerRun {
 // Main task used from docker plugins
 task dockerBuildAndPublish(dependsOn: dockerTagsPush)
 //task dockerBuildAndPublishForPrivateRegistry(dependsOn: dockerPushPrivateRegistry)
-
+/**
 // Give an alias to dockerRun task
-task dockerStart(dependsOn: ['dockerBuild','dockerRun']) {
-//	dockerRun.mustRunAfter dockerBuild
+task dockerStart(dependsOn: [dockerBuild,dockerRun]) {
+	dockerRun.mustRunAfter dockerBuild
 }
-
+*/
 //
 // helm
 //
