@@ -177,7 +177,11 @@ task certify(dependsOn: 'test')
 
 // Special test task meant to run manually outside the cluster (development mode) and since the service isn't published outside
 // the cluster, we'll need kubectl port forwarding
-task testViaPortForwarding(dependsOn: ['startKubectlPortForwarding','test','stopKubectlPortForwarding'])
+task testViaPortForwarding(dependsOn: ['startKubectlPortForwarding','test','stopKubectlPortForwarding']) {
+	test.mustRunAfter startKubectlPortForwarding
+
+	stopKubectlPortForwarding.mustRunAfter test
+}
 
 //
 // Deal with kubectl port-forward blocking command
@@ -220,7 +224,7 @@ docker {
 }
 
 // Give an alias to docker task
-task dockerBuild(dependsOn: ['jar','docker'])
+task dockerBuild(dependsOn: ['docker'])
 
 dockerRun {
 	name "${productName}"
@@ -236,7 +240,9 @@ task dockerBuildAndPublish(dependsOn: 'dockerTagsPush')
 //task dockerBuildAndPublishForPrivateRegistry(dependsOn: 'dockerPushPrivateRegistry')
 
 // Give an alias to dockerRun task
-task dockerStart(dependsOn: ['dockerBuild','dockerRun'])
+task dockerStart(dependsOn: ['dockerBuild','dockerRun']) {
+	dockerRun.mustRunAfter dockerBuild
+}
 
 //
 // helm
