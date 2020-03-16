@@ -53,7 +53,7 @@ gradle.taskGraph.beforeTask { Task task ->
 gradle.taskGraph.afterTask { Task task ->
 	if (task.name == 'reckonTagCreate') {
 		project.version = originalProjectVersionObject.toString()
-	} 
+	}
 }
 
 // The Reckon plugin
@@ -78,17 +78,17 @@ project.version = originalProjectVersionObject.toString()
 
 // Configure protobuf
 protobuf {
-	protoc { 
-		artifact = "com.google.protobuf:protoc:${dep_protoc_version}" 
+	protoc {
+		artifact = "com.google.protobuf:protoc:${dep_protoc_version}"
 	}
 	plugins {
-		grpc { 
-			artifact = "io.grpc:protoc-gen-grpc-java:${dep_grpc_version}" 
+		grpc {
+			artifact = "io.grpc:protoc-gen-grpc-java:${dep_grpc_version}"
 		}
 	}
 	generateProtoTasks {
-		all()*.plugins { 
-			grpc {} 
+		all()*.plugins {
+			grpc {}
 		}
 	}
 }
@@ -107,17 +107,17 @@ sourceSets {
  *
  *  Additional parts from EGradle template for comfortable eclipse setup
  *  (necessary, because every EGradle template MUST be importable out of the box)
- * 
+ *
  * ---------------------------------------------------------------------------- */
 
 // To have javadocs in eclipse added - where no sources are available - we need these lines:
 // see https://docs.gradle.org/current/dsl/org.gradle.plugins.ide.eclipse.model.EclipseClasspath.html
-eclipse {	 
+eclipse {
 	classpath {
 		downloadSources = true // default: true
 		downloadJavadoc = true // default: false
 	}
-} 
+}
 
 // first define an array containing source folders to be always available - even when not existing already
 def eclipseSourceFolders = [
@@ -128,10 +128,10 @@ def eclipseSourceFolders = [
 ];
 
 // now create those source folders when not existing, when eclipse task is executed:
-tasks.eclipse.dependsOn << {	
-	for (String sourceFolder: eclipseSourceFolders) { 
+tasks.eclipse.dependsOn << {
+	for (String sourceFolder: eclipseSourceFolders) {
 		def resourceDir = new File(project.projectDir, sourceFolder)
-		
+
 		if (!resourceDir.exists() && !resourceDir.mkdirs()) {
 			logger.info("Not able to create %1",resourceDir);
 		}
@@ -142,7 +142,7 @@ tasks.eclipse.dependsOn << {
 jar {
 	archiveVersion = productVersion
 //	archiveClassifier = obtainCurrentBranchName()
-	
+
 	manifest {
 			attributes(
 				'Built-By'           : buildUser,
@@ -186,11 +186,11 @@ task testViaPortForwarding(dependsOn: ['startKubectlPortForwarding','test','stop
 task startKubectlPortForwarding(type: SpawnProcessTask) {
 	command "kubectl port-forward services/${productName}-service ${productInternalPort}:${productInternalPort}"
 	ready 'Forwarding from'
-//	pidLockFileName '.other.pid.lock'	
+//	pidLockFileName '.other.pid.lock'
 }
 
 task stopKubectlPortForwarding(type: KillProcessTask) {
-//	pidLockFileName '.other.pid.lock'	
+//	pidLockFileName '.other.pid.lock'
 }
 
 //
@@ -232,7 +232,7 @@ dockerRun {
 }
 
 // Main task used from docker plugins
-task dockerBuildAndPublish(dependsOn: 'dockerPushDockerHub')
+task dockerBuildAndPublish(dependsOn: 'dockerTagsPush')
 //task dockerBuildAndPublishForPrivateRegistry(dependsOn: 'dockerPushPrivateRegistry')
 
 // Give an alias to dockerRun task
@@ -255,7 +255,7 @@ helm {
 	tiller {
 		// Don't install the server
 		install = false
-		
+
 		// Install/expect Tiller in a different namespace than kube-system
 //		namespace = "custom-namespace"
 
@@ -284,7 +284,7 @@ helm {
 		}
 	}
 
-	// The "charts" section (above) can also be defined using a pre-defined default chart named 'main' 
+	// The "charts" section (above) can also be defined using a pre-defined default chart named 'main'
 //	helm.charts.main.chartName = productName
 //	helm.charts.main.chartVersion = productVersion
 //	helm.charts.main.sourceDir = file("${productK8ShelmChartsFolder}${File.separator}${productName}")
@@ -307,12 +307,12 @@ helm {
 			// If true, the associated helmDelete task will purge the release, completely removing the release from the store and making its name free for later use
 			purge = true
 
-			// If true, the associated helmInstall task will replace an existing release with the same name (using helm install --replace instead of helm upgrade --install).			
-//			replace = true 
-			
-			// If true, perform a dry run 
+			// If true, the associated helmInstall task will replace an existing release with the same name (using helm install --replace instead of helm upgrade --install).
+//			replace = true
+
+			// If true, perform a dry run
 //			dryRun = true
-			
+
 			// pass values (like --set on the command line)
 //			values = ['image.tag':"${productVersion}"]
 
@@ -321,7 +321,7 @@ helm {
 
 			//  If set, installation process purges chart on fail, also sets --wait flag
 			atomic = true
-		}		
+		}
 	}
 
 //	publishing {
@@ -377,7 +377,7 @@ task designatedTagCreate {
 			tagMessage = "Release of ${tagName}"
 		}
 	}
-	
+
 	doLast {
 		grgit.tag.add {
 			name = tagName
@@ -385,26 +385,26 @@ task designatedTagCreate {
 			force = true
 //			tagger = new Person(vcsUsername,vcsUseremail)
 		}
-		
+
 		println "Designated tag cretaed: ${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}"
 	}
 }
 
 task designatedTagDestroy {
 	description = 'Removes designated tag name from GIT'
-	
+
 	doFirst {
 		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isEmpty() == true)
 		{
 			throw new GradleException("Missing or Empty '${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME}' project property")
 		}
 	}
-	
+
 	doLast {
 		grgit.tag.remove {
 			names = [project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]]
 		}
-		
+
 		println "Designated tag destroyed: ${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}"
 	}
 }
@@ -412,7 +412,7 @@ task designatedTagDestroy {
 // Requires the use of "-Dorg.ajoberstar.grgit.auth.username" (with a proper token) for authentication
 task gitPush {
 	description = "Pushes current branch's committed changes to origin repo"
-	
+
 	doLast {
 		grgit.push {
 			tags = true
@@ -423,7 +423,7 @@ task gitPush {
 
 task gitPull {
 	description = "Pulls origin repo's committed changes to current branch"
-	
+
 	doLast {
 		grgit.pull {
 			rebase = true
