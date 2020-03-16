@@ -241,7 +241,7 @@ task dockerBuildAndPublish(dependsOn: dockerTagsPush)
 
 // Give an alias to dockerRun task
 task dockerStart(dependsOn: [dockerBuild,dockerRun]) {
-//	dockerRun.mustRunAfter dockerBuild
+	dockerRun.mustRunAfter dockerBuild
 }
 
 //
