@@ -23,7 +23,7 @@ file(CONST_BRANCH_SPECIFIC_CONFIGURATION_FILE_NAME).withInputStream { branchSpec
 ext {
 	serviceName = service_name
 	productName = project.name
-	productRepository = "${serviceName}/${productName}"
+	productRepository = isSignificantVersion() == true ? "${serviceName}/${productName}" : "${productName}"
 	productK8ShelmChartsFolder = "k8s${File.separator}helm${File.separator}charts"
 	dockerFilePath = project.hasProperty('dockerFilePathOverride') ? "${-> dockerFilePathOverride}" : "${-> common_sub_module_name}${File.separator}Dockerfile"
 	vcsURL = grgit.remote.list()[0].url
@@ -269,8 +269,8 @@ helm {
 		values.put 'appVersion',"${productVersion}"
 		values.put 'maintainer.name',"${vcsUsername}"
 		values.put 'maintainer.email',"${vcsUseremail}"
-		values.put 'imageTag',"${productVersion}"
 		values.put 'imageRepository',"${productRepository}"
+		values.put 'imageTag',"${productVersion}"
 		values.put 'servicePort',"${productInternalPort}"
 		values.put 'serviceTargetPort',"${productInternalPort}"
 		values.put 'serviceNodePort',"${productExternalPort}"
@@ -445,12 +445,7 @@ task publishDesignatedVersion(dependsOn: [stampDesignatedVersion,gitPush]) {
 // One version to rule them all
 task printApplicableVersion {
 	doLast {
-		def applicableVersionName = project.version.toString()
-
-		// Check if we are to work with a designated version (tag), otherwise return reckon based version (tag)
-		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == true && project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == false) {
-			applicableVersionName = project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]
-		}
+		def applicableVersionName = obtainApplicableVersionName()
 
 		println "Prime version: ${applicableVersionName}"
 	}
