@@ -356,7 +356,7 @@ task helmTestAndClean(type:Exec) {
 }
 
 // Main task used from helm plugins
-task helmPackageAndPublish(dependsOn: helmPackage,helmPublish) {
+task helmPackageAndPublish(dependsOn: [helmPackage,helmPublish]) {
 	helmPublish.mustRunAfter helmPackage
 }
 
