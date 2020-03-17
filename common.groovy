@@ -27,7 +27,7 @@ def manifestVersion() {
 	if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == true && project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == false) {
 		manifestedVersion = "${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}-${currentBranchName}"
 	}
-	// Otherwise check if the version should be significant (in which case use reckon based version (tag))
+	// Otherwise check if running within non-development branches - in which case use reckon based version (tag)
 	else if (currentBranchName == production_branch_name || currentBranchName == staging_branch_name) {
 		manifestedVersion = "${dockerSafeTagName}-${currentBranchName}"
 	}
