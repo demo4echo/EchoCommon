@@ -355,6 +355,11 @@ task helmTestAndClean(type:Exec) {
 	args "test","${productName}","--cleanup"
 }
 
+// Main task used from helm plugins
+task helmPackageAndPublish(dependsOn: helmPackage,helmPublish) {
+	helmPublish.mustRunAfter helmPackage
+}
+
 // Notes:
 // 1. helmPackge and helmInstall tasks are used as is
 // 2. helmInstall and helmUninstall (helmDelete) can be used with "-Phelm.dryRun"
