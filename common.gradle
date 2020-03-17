@@ -244,7 +244,7 @@ task engageDocker(dependsOn: [dockerTag,dockerTagsPush]) {
 		shouldPublishArtifactsOnDevEnv(branchSpecificProps)
 	}
 }
-engageDocker.enable = isDevelopmentEnvironment()
+engageDocker.enabled = isDevelopmentEnvironment()
 
 /**
 // Give an alias to dockerRun task
