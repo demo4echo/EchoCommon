@@ -79,7 +79,7 @@ def isDevelopmentEnvironment() {
 }
 
 // Constructs the image name (local-wise is in development environment and so requested, remote-wise otherwise)
-def manifestImageName() {
+def manifestImageName(Properties branchSpecificProps) {
 	def publishArtifactsOnDevelopmentEnvironment = branchSpecificProps.hasProperty(publishArtifactsOnDevelopmentEnvironment) ?: false
 	
 	// Local centric

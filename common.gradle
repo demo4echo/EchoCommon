@@ -275,7 +275,7 @@ helm {
 		values.put 'appVersion',"${productVersion}"
 		values.put 'maintainer.name',"${vcsUsername}"
 		values.put 'maintainer.email',"${vcsUseremail}"
-		values.put 'imageRepository',manifestImageName()
+		values.put 'imageRepository',manifestImageName(branchSpecificProps)
 		values.put 'imageTag',"${productVersion}"
 		values.put 'servicePort',"${productInternalPort}"
 		values.put 'serviceTargetPort',"${productInternalPort}"
