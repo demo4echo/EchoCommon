@@ -70,7 +70,6 @@ def isSignificantVersion() {
 // Checks if we are running on development (feature/defect) environment/branches
 def isDevelopmentEnvironment() {
 	def currentBranchName = obtainCurrentBranchName()
-	println "Current branch is: [${currentBranchName}]"
 	if (currentBranchName == production_branch_name || currentBranchName == staging_branch_name) {                 
 		return false
 	}
@@ -79,12 +78,17 @@ def isDevelopmentEnvironment() {
 	}
 }
 
+// Checks if we are running on development (feature/defect) environment/branches and artifacts publishing was requested
+def shouldPublishArtifactsOnDevEnv(Properties branchSpecificProps) {
+	def publishOnDevEnvDirective = branchSpecificProps.hasProperty('publishArtifactsOnDevelopmentEnvironment') ? branchSpecificProps.publishArtifactsOnDevelopmentEnvironment : false
+
+	return publishOnDevEnvDirective
+}
+
 // Constructs the image name (local-wise is in development environment and so requested, remote-wise otherwise)
 def manifestImageName(Properties branchSpecificProps) {
-	def publishOnDevEnvDirective = branchSpecificProps.hasProperty('publishArtifactsOnDevelopmentEnvironment') ? branchSpecificProps.publishArtifactsOnDevelopmentEnvironment : false
-	
 	// Local centric
-	if (isDevelopmentEnvironment() == true && publishOnDevEnvDirective == true) {
+	if (isDevelopmentEnvironment() == true && shouldPublishArtifactsOnDevEnv(branchSpecificProps) == true) {
 		return productName
 	}
 	// Remote centric
@@ -110,5 +114,6 @@ ext {
 	obtainApplicableVersionName = this.&obtainApplicableVersionName
 	isSignificantVersion = this.&isSignificantVersion
 	isDevelopmentEnvironment = this.&isDevelopmentEnvironment
+	shouldPublishArtifactsOnDevEnv = this.&shouldPublishArtifactsOnDevEnv
 	manifestImageName = this.&manifestImageName
 }
