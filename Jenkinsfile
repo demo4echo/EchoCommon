@@ -138,7 +138,7 @@ pipeline {
 					-Preckon.stage=${env.JENKINS_SLAVE_K8S_RECKON_STAGE} \
 					-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
 					-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
-					helmPackage" // helmPackageAndPublish
+					helmPackageAndPublish"
 			}
 		}
 		stage('\u2779 install \u2728') {//\u1F3F4
