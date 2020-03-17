@@ -67,6 +67,31 @@ def isSignificantVersion() {
 	return isSignificantVersion
 }
 
+// Checks if we are running on development (feature/defect) environment/branches
+def isDevelopmentEnvironment() {
+	def currentBranchName = obtainCurrentBranchName()
+	if (currentBranchName == production_branch_name || currentBranchName == staging_branch_name) {                 
+		return false
+	}
+	else {
+		return true
+	}
+}
+
+// Constructs the image name (local-wise is in development environment and so requested, remote-wise otherwise)
+def manifestImageName() {
+	def publishArtifactsOnDevelopmentEnvironment = branchSpecificProps.hasProperty(publishArtifactsOnDevelopmentEnvironment) ?: false
+	
+	// Local centric
+	if (isDevelopmentEnvironment() == true && publishArtifactsOnDevelopmentEnvironment == true) {
+		return productName
+	}
+	// Remote centric
+	else {
+		return productRepository
+	}
+}
+
 // Export constants and functions (by turning the functions into closures)
 ext {
 	// Constants
@@ -83,4 +108,6 @@ ext {
 	manifestNamespace = this.&manifestNamespace
 	obtainApplicableVersionName = this.&obtainApplicableVersionName
 	isSignificantVersion = this.&isSignificantVersion
+	isDevelopmentEnvironment = this.&isDevelopmentEnvironment
+	manifestImageName = this.&manifestImageName
 }
