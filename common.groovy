@@ -67,23 +67,10 @@ def isSignificantVersion() {
 	return isSignificantVersion
 }
 
-// Checks if artifacts publishing directive was given (or indicate artifacts publishing is required)
-def shouldPublishArtifacts(Properties branchSpecificProps) {
-	def publishArtifactsDirective = branchSpecificProps.publishArtifacts ?: true
-	def hasProp = branchSpecificProps.hasProperty('publishArtifacts')
-
-	println "branchSpecificProps => [${branchSpecificProps}]"
-	println "tiranProperty => [${branchSpecificProps.tiran}]"
-	println "theProperty => [${branchSpecificProps.publishArtifacts}]"
-	println "shouldPublishArtifacts => [${publishArtifactsDirective}]"
-
-	return publishArtifactsDirective
-}
-
 // Constructs the image name (local-wise if artifacts publishing was disabled, remote-wise otherwise)
 def manifestImageName(Properties branchSpecificProps) {
 	// Local centric
-	if (shouldPublishArtifacts(branchSpecificProps) == false) {
+	if (branchSpecificProps.publishArtifacts ?: true) {
 		return productName
 	}
 	// Remote centric
@@ -108,6 +95,5 @@ ext {
 	manifestNamespace = this.&manifestNamespace
 	obtainApplicableVersionName = this.&obtainApplicableVersionName
 	isSignificantVersion = this.&isSignificantVersion
-	shouldPublishArtifacts = this.&shouldPublishArtifacts
 	manifestImageName = this.&manifestImageName
 }
