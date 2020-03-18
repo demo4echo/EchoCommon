@@ -36,6 +36,7 @@ ext {
 	buildFramework	= "Gradle ${gradle.gradleVersion}"
 	buildJDK = "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})"
 	buildOS = "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
+	publishArtifactsDirective = branchSpecificProps.publishArtifacts != null ? branchSpecificProps.publishArtifacts : true
 }
 
 //
@@ -240,7 +241,6 @@ task dockerBuildAndPublish(dependsOn: dockerTagsPush)
 
 // Special Docker task that can skip artifacts publishing upon request
 task manifestDockerImage(dependsOn: dockerTag)
-def publishArtifactsDirective = branchSpecificProps.publishArtifacts != null ? branchSpecificProps.publishArtifacts : true
 if (publishArtifactsDirective == true) {
 	manifestDockerImage.finalizedBy dockerTagsPush
 }
@@ -368,7 +368,6 @@ task helmPackageAndPublish(dependsOn: [helmPackage,helmPublish]) {
 
 // Special Helm task that can skip artifacts publishing upon request
 task manifestHelmChart(dependsOn: helmPackage)
-def publishArtifactsDirective = branchSpecificProps.publishArtifacts != null ? branchSpecificProps.publishArtifacts : true
 if (publishArtifactsDirective == true) {
 	manifestHelmChart.finalizedBy helmPublish
 }
