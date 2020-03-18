@@ -239,10 +239,10 @@ dockerRun {
 task dockerBuildAndPublish(dependsOn: dockerTagsPush)
 
 // Special Docker task that can skip artifacts publishing upon request
-task engageDocker(dependsOn: dockerTag)
+task manifestDockerImage(dependsOn: dockerTag)
 def publishArtifactsDirective = branchSpecificProps.publishArtifacts != null ? branchSpecificProps.publishArtifacts : true
 if (publishArtifactsDirective == true) {
-	engageDocker.finalizedBy dockerTagsPush
+	manifestDockerImage.finalizedBy dockerTagsPush
 }
 
 /**
@@ -364,6 +364,13 @@ task helmTestAndClean(type:Exec) {
 // Main task used from helm plugins
 task helmPackageAndPublish(dependsOn: [helmPackage,helmPublish]) {
 	helmPublish.mustRunAfter helmPackage
+}
+
+// Special Helm task that can skip artifacts publishing upon request
+task manifestHelmChart(dependsOn: helmPackage)
+def publishArtifactsDirective = branchSpecificProps.publishArtifacts != null ? branchSpecificProps.publishArtifacts : true
+if (publishArtifactsDirective == true) {
+	manifestHelmChart.finalizedBy helmPublish
 }
 
 // Notes:
