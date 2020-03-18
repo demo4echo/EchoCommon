@@ -71,6 +71,8 @@ def isSignificantVersion() {
 def shouldPublishArtifacts(Properties branchSpecificProps) {
 	def publishArtifactsDirective = branchSpecificProps.hasProperty('publishArtifacts') ? branchSpecificProps.publishArtifacts : true
 
+	println "shouldPublishArtifacts => [${publishArtifactsDirective}]"
+
 	return publishArtifactsDirective
 }
 
