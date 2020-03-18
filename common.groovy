@@ -73,7 +73,7 @@ def shouldPublishArtifacts(Properties branchSpecificProps) {
 	def hasProp = branchSpecificProps.hasProperty('publishArtifacts')
 
 	println "branchSpecificProps => [${branchSpecificProps}]"
-	println "hasProperty => [${hasProp}]"
+	println "tiranProperty => [${branchSpecificProps.tiran}]"
 	println "theProperty => [${branchSpecificProps.publishArtifacts}]"
 	println "shouldPublishArtifacts => [${publishArtifactsDirective}]"
 
