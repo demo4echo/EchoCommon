@@ -240,8 +240,7 @@ task dockerBuildAndPublish(dependsOn: dockerTagsPush)
 
 // Docker task that can skip artifacts publishing if on development environment and if requested
 task engageDocker(dependsOn: dockerTag)
-//if (isDevelopmentEnvironment() == false || shouldPublishArtifactsOnDevEnv(branchSpecificProps) == true) {
-if (false) {
+if (isDevelopmentEnvironment() == false || shouldPublishArtifactsOnDevEnv(branchSpecificProps) == true) {
 	engageDocker.finalizedBy dockerTagsPush
 }
 
