@@ -243,6 +243,7 @@ task dockerBuildAndPublish(dependsOn: dockerTagsPush)
 task manifestDockerImage(dependsOn: dockerTag)
 println "publishArtifactsDirective => ${publishArtifactsDirective}"
 if (publishArtifactsDirective == true) {
+	println "in finalizedBy"
 	manifestDockerImage.finalizedBy dockerTagsPush
 }
 
