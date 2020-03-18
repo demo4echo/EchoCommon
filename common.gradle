@@ -240,7 +240,8 @@ task dockerBuildAndPublish(dependsOn: dockerTagsPush)
 
 // Special Docker task that can skip artifacts publishing upon request
 task engageDocker(dependsOn: dockerTag)
-if (branchSpecificProps.publishArtifacts != null ? branchSpecificProps.publishArtifacts : true) {
+def publishArtifactsDirective = branchSpecificProps.publishArtifacts != null ? branchSpecificProps.publishArtifacts : true
+if (publishArtifactsDirective == true) {
 	engageDocker.finalizedBy dockerTagsPush
 }
 

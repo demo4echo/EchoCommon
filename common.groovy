@@ -69,11 +69,12 @@ def isSignificantVersion() {
 
 // Constructs the image name (local-wise if artifacts publishing was disabled, remote-wise otherwise)
 def manifestImageName(Properties branchSpecificProps) {
-	// Local centric
-	if (branchSpecificProps.publishArtifacts != null ? branchSpecificProps.publishArtifacts : true) {
+	def publishArtifactsDirective = branchSpecificProps.publishArtifacts != null ? branchSpecificProps.publishArtifacts : true
+	// Local centric (no publishing)
+	if (publishArtifactsDirective == false) {
 		return productName
 	}
-	// Remote centric
+	// Remote centric (publishing in place)
 	else {
 		return productRepository
 	}
