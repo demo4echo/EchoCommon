@@ -88,7 +88,7 @@ def shouldPublishArtifactsOnDevEnv(Properties branchSpecificProps) {
 // Constructs the image name (local-wise is in development environment and so requested, remote-wise otherwise)
 def manifestImageName(Properties branchSpecificProps) {
 	// Local centric
-	if (isDevelopmentEnvironment() == true && shouldPublishArtifactsOnDevEnv(branchSpecificProps) == true) {
+	if (isDevelopmentEnvironment() == true && shouldPublishArtifactsOnDevEnv(branchSpecificProps) == false) {
 		return productName
 	}
 	// Remote centric
