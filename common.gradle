@@ -239,8 +239,8 @@ dockerRun {
 task dockerBuildAndPublish(dependsOn: dockerTagsPush)
 
 // Docker task that can skip artifacts publishing if requested
+dockerTagsPush.enabled = false
 task engageDocker(dependsOn: [dockerTag,dockerTagsPush]) {
-	dockerTagsPush.enabled = false
 //	dockerTagsPush.onlyIf {
 //		shouldPublishArtifactsOnDevEnv(branchSpecificProps)
 //	}
