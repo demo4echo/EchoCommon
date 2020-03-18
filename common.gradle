@@ -285,6 +285,7 @@ helm {
 		values.put 'maintainer.email',"${vcsUseremail}"
 		values.put 'imageRepository',manifestImageName(branchSpecificProps)
 		values.put 'imageTag',"${productVersion}"
+		values.put 'imagePullPolicy',publishArtifactsDirective == true ? 'Always' : 'Never'
 		values.put 'servicePort',"${productInternalPort}"
 		values.put 'serviceTargetPort',"${productInternalPort}"
 		values.put 'serviceNodePort',"${productExternalPort}"
