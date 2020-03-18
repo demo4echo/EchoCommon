@@ -36,7 +36,7 @@ ext {
 	buildFramework	= "Gradle ${gradle.gradleVersion}"
 	buildJDK = "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})"
 	buildOS = "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}"
-	publishArtifactsDirective = branchSpecificProps.publishArtifacts != null ? branchSpecificProps.publishArtifacts : true
+	publishArtifactsDirective = branchSpecificProps.publishArtifacts != null ? branchSpecificProps.publishArtifacts.toBoolean() : true
 }
 
 //
