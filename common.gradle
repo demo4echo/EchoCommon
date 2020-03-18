@@ -241,6 +241,7 @@ task dockerBuildAndPublish(dependsOn: dockerTagsPush)
 
 // Special Docker task that can skip artifacts publishing upon request
 task manifestDockerImage(dependsOn: dockerTag)
+println "publishArtifactsDirective => ${publishArtifactsDirective}"
 if (publishArtifactsDirective == true) {
 	manifestDockerImage.finalizedBy dockerTagsPush
 }
