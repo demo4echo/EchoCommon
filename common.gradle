@@ -238,9 +238,9 @@ dockerRun {
 // Main task used from docker plugins
 task dockerBuildAndPublish(dependsOn: dockerTagsPush)
 
-// Docker task that can skip artifacts publishing if on development environment and if requested
+// Special Docker task that can skip artifacts publishing upon request
 task engageDocker(dependsOn: dockerTag)
-if (isDevelopmentEnvironment() == false || shouldPublishArtifactsOnDevEnv(branchSpecificProps) == true) {
+if (shouldPublishArtifacts(branchSpecificProps) == true) {
 	engageDocker.finalizedBy dockerTagsPush
 }
 

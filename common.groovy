@@ -27,8 +27,8 @@ def manifestVersion() {
 	if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == true && project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == false) {
 		manifestedVersion = "${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}-${currentBranchName}"
 	}
-	// Otherwise check if running within non-development branches and version is significant - in which case use reckon based version (tag)
-	else if (isDevelopmentEnvironment() == false && isSignificantVersion() == true) {
+	// Otherwise check if version is significant - in which case use reckon based version (tag)
+	else if (isSignificantVersion() == true) {
 		manifestedVersion = "${dockerSafeTagName}-${currentBranchName}"
 	}
 
@@ -67,28 +67,17 @@ def isSignificantVersion() {
 	return isSignificantVersion
 }
 
-// Checks if we are running on development (feature/defect) environment/branches
-def isDevelopmentEnvironment() {
-	def currentBranchName = obtainCurrentBranchName()
-	if (currentBranchName == production_branch_name || currentBranchName == staging_branch_name) {                 
-		return false
-	}
-	else {
-		return true
-	}
+// Checks if artifacts publishing directive was given (or indicate artifacts publishing is required)
+def shouldPublishArtifacts(Properties branchSpecificProps) {
+	def publishArtifactsDirective = branchSpecificProps.hasProperty('publishArtifacts') ? branchSpecificProps.publishArtifacts : true
+
+	return publishArtifactsDirective
 }
 
-// Checks if we are running on development (feature/defect) environment/branches and artifacts publishing was requested
-def shouldPublishArtifactsOnDevEnv(Properties branchSpecificProps) {
-	def publishOnDevEnvDirective = branchSpecificProps.hasProperty('publishArtifactsOnDevelopmentEnvironment') ? branchSpecificProps.publishArtifactsOnDevelopmentEnvironment : false
-
-	return publishOnDevEnvDirective
-}
-
-// Constructs the image name (local-wise is in development environment and so requested, remote-wise otherwise)
+// Constructs the image name (local-wise if artifacts publishing was disabled, remote-wise otherwise)
 def manifestImageName(Properties branchSpecificProps) {
 	// Local centric
-	if (isDevelopmentEnvironment() == true && shouldPublishArtifactsOnDevEnv(branchSpecificProps) == false) {
+	if (shouldPublishArtifacts(branchSpecificProps) == false) {
 		return productName
 	}
 	// Remote centric
@@ -113,7 +102,6 @@ ext {
 	manifestNamespace = this.&manifestNamespace
 	obtainApplicableVersionName = this.&obtainApplicableVersionName
 	isSignificantVersion = this.&isSignificantVersion
-	isDevelopmentEnvironment = this.&isDevelopmentEnvironment
-	shouldPublishArtifactsOnDevEnv = this.&shouldPublishArtifactsOnDevEnv
+	shouldPublishArtifacts = this.&shouldPublishArtifacts
 	manifestImageName = this.&manifestImageName
 }
