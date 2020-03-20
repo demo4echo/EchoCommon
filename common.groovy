@@ -17,7 +17,7 @@ def obtainLatestTag() {
 //
 
 // Builds a proper version name
-def manifestVersion(boolean concatenateBranchNameAsSuffix = true) {
+def manifestVersion(boolean concatenateBranchNameAsSuffix) {
 	def currentBranchName = obtainCurrentBranchName()
 	def versionSuffix = concatenateBranchNameAsSuffix == true ? "-${currentBranchName}" : ""
 	def currentVersionName = project.version.toString() // must be done this way since reckon makes project.version non serializable
