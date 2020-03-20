@@ -1,5 +1,5 @@
-@Grab('org.ajoberstar.grgit:grgit-core:4.0.1') // version was 4.0.+
-import org.ajoberstar.grgit.Person
+//@Grab('org.ajoberstar.grgit:grgit-core:4.0.1') // version was 4.0.+
+//import org.ajoberstar.grgit.Person
 
 //buildscript {
 //	repositories {
@@ -415,7 +415,7 @@ task applicableTagCreate {
 			name = tagName
 			message = tagMessage
 			force = true
-			tagger = new Person(vcsUsername,vcsUseremail)
+//			tagger = new Person(vcsUsername,vcsUseremail)
 		}
 
 		println "Applicable tag cretaed: ${productTag}"
