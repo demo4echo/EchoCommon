@@ -77,6 +77,13 @@ ext.productVersion = manifestVersion()
 //project.description = 'The Echo demo product'
 project.version = originalProjectVersionObject.toString()
 
+// Make every other task depend on 'printApplicableVersion'
+// matching() and all() are "live" so any tasks declared after this line will also depend on 'printApplicableVersion'
+tasks.matching { it.name != 'printApplicableVersion' }.all {
+	it.dependsOn printApplicableVersion
+//	Task task -> task.dependsOn initializer
+}
+
 // Configure protobuf
 protobuf {
 	protoc {

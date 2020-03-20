@@ -17,19 +17,20 @@ def obtainLatestTag() {
 //
 
 // Builds a proper version name
-def manifestVersion() {
+def manifestVersion(boolean concatenateBranchNameAsSuffix = true) {
 	def currentBranchName = obtainCurrentBranchName()
+	def versionSuffix = concatenateBranchNameAsSuffix == true ? "-${currentBranchName}" : ""
 	def currentVersionName = project.version.toString() // must be done this way since reckon makes project.version non serializable
 	def dockerSafeTagName = currentVersionName.replace(CONST_UNSAFE_CHARACTER_FOR_DOCKER_TAG_NAME,CONST_SAFE_CHARACTER_REPLACER_FOR_DOCKER_TAG_NAME)
-	def manifestedVersion = "${insignificant_version_notation}-${currentBranchName}"
+	def manifestedVersion = "${insignificant_version_notation}${versionSuffix}"
 
 	// Check if we are to work with a designated version (tag) - in which case use it
 	if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == true && project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == false) {
-		manifestedVersion = "${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}-${currentBranchName}"
+		manifestedVersion = "${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}${versionSuffix}"
 	}
 	// Otherwise check if version is significant - in which case use reckon based version (tag)
 	else if (isSignificantVersion() == true) {
-		manifestedVersion = "${dockerSafeTagName}-${currentBranchName}"
+		manifestedVersion = "${dockerSafeTagName}${versionSuffix}"
 	}
 
 	return manifestedVersion
@@ -49,14 +50,7 @@ def manifestNamespace() {
 
 // Obtain the applicable version name
 def obtainApplicableVersionName() {
-	def applicableVersionName = project.version.toString()
-
-	// Check if we are to work with a designated version (tag), otherwise return reckon based version (tag)
-	if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == true && project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == false) {
-		applicableVersionName = project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]
-	}
-
-	return applicableVersionName
+	return manifestVersion(false)
 }
 
 // Checks if the applicable version marks a significant version or not
