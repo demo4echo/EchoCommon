@@ -495,6 +495,6 @@ task printLatestVersion {
 // Make every other task depend on 'printApplicableVersion'
 // matching() and all() are "live" so any tasks declared after this line will also depend on 'printApplicableVersion'
 tasks.matching { it.name != 'printApplicableVersion'  && it.name != 'printLatestVersion'  && it.name != 'printDesignatedVersion' && it.name != 'printVersion' }.all {
-//	it.dependsOn printApplicableVersion
-	Task task -> task.dependsOn printApplicableVersion
+	it.dependsOn printApplicableVersion
+//	Task task -> task.dependsOn printApplicableVersion
 }
