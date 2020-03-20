@@ -298,7 +298,8 @@ helm {
 //		"${productName}" {
 			chartName = productName
 			chartVersion = helmChartVersion ?: productVersion
-			sourceDir = file("${productK8ShelmChartsFolder}${File.separator}${productName}")
+			sourceDir = file("${productK8ShelmChartsFolder}${File.separator}main")
+//			sourceDir = file("${productK8ShelmChartsFolder}${File.separator}${productName}")
 		}
 	}
 
