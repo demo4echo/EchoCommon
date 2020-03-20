@@ -79,6 +79,13 @@ ext.productTag = manifestVersion(false)
 //project.description = 'The Echo demo product'
 project.version = originalProjectVersionObject.toString()
 
+// Define an Initializer task (other projects can anchor on) and make every other task depend on it
+task initializer()
+// matching() and all() are "live" so any tasks declared after this line will also depend on 'initializer'
+tasks.matching { it.name != 'initializer' }.all {
+	it.dependsOn initializer
+}
+
 // Configure protobuf
 protobuf {
 	protoc {
@@ -485,8 +492,7 @@ task printLatestVersion {
 	}
 }
 
-// Make every other task depend on 'printApplicableVersion'
-// matching() and all() are "live" so any tasks declared after this line will also depend on 'printApplicableVersion'
-tasks.matching { it.name != 'printApplicableVersion'  && it.name != 'printLatestVersion'  && it.name != 'printVersion' }.all {
+// Make every task depend on 'printApplicableVersion' (apart from the 'initializer' task, and some more exceptions)
+tasks.matching { it.name != 'initializer' && it.name != 'printApplicableVersion'  && it.name != 'printLatestVersion'  && it.name != 'printVersion' }.all {
 	it.dependsOn printApplicableVersion
 }
