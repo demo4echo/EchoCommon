@@ -79,6 +79,10 @@ ext.productTag = manifestVersion(false)
 //project.description = 'The Echo demo product'
 project.version = originalProjectVersionObject.toString()
 
+//
+// Define initialization and finalization special tasks
+//
+
 // Define an Initializer task (other projects can anchor on) and make every other task depend on it
 task initializer() {
 	doFirst {
@@ -89,6 +93,19 @@ task initializer() {
 // matching() and all() are "live" so any tasks declared after this line will also depend on 'initializer'
 tasks.matching { it.name != 'initializer' }.all {
 	it.dependsOn initializer
+}
+
+// Define a Finalizer task (executed as the last task) and make every other task depend on it
+task finalizer() {
+	doLast {
+		// Print timestemp of the build end
+		def currentDateTime = java.time.LocalDateTime.now()
+		println "Build end timestemp: ${currentDateTime}"
+	}
+}
+// matching() and all() are "live" so any tasks declared after this line will also be finalized by 'finalizer'
+tasks.matching { it.name != 'finalizer' }.all {
+	it.finalizedBy finalizer
 }
 
 // Configure protobuf
