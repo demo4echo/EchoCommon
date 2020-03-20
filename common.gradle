@@ -455,6 +455,7 @@ task gitPush {
 	doLast {
 		grgit.push {
 			tags = true
+			force = true
 //			dryRun = true
 		}
 	}
