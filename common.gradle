@@ -294,7 +294,8 @@ helm {
 	}
 
 	charts {
-		"${productName}" {
+		main {
+//		"${productName}" {
 			chartName = productName
 			chartVersion = helmChartVersion ?: productVersion
 			sourceDir = file("${productK8ShelmChartsFolder}${File.separator}${productName}")
@@ -315,8 +316,8 @@ helm {
 
 	releases {
 		"${productName}" {
-//			from chart('main')
-			from chart("${productName}")
+			from chart('main')
+//			from chart("${productName}")
 
 			// Namespace to install the release into. Defaults to the current kube config namespace.
 			namespace = manifestNamespace()
