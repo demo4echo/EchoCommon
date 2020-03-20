@@ -479,6 +479,7 @@ task gitPull {
 // Applicable version helpers
 task printApplicableVersion {
 	doLast {
+		// Note: the word 'Prime' must remain as the Pipeline is using this task and filters the output by this word!
 		println "Prime version: ${productTag}"
 	}
 }
