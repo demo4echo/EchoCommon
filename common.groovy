@@ -28,8 +28,9 @@ def manifestVersion(boolean concatenateBranchNameAsSuffix = true) {
 	if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == true && project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isBlank() == false) {
 		manifestedVersion = "${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}${versionSuffix}"
 	}
-	// Otherwise check if version is significant - in which case use reckon based version (tag)
-	else if (isSignificantVersion() == true) {
+
+	// Check if version is significant - in which case use reckon based version (tag) (don't use else-if since we need to work on the most updated 'manifestedVersion')
+	if (isSignificantVersion(manifestedVersion) == true) {
 		manifestedVersion = "${dockerSafeTagName}${versionSuffix}"
 	}
 
@@ -48,15 +49,9 @@ def manifestNamespace() {
 	return namespace
 }
 
-// Obtain the applicable version name
-def obtainApplicableVersionName() {
-	return manifestVersion(false)
-}
-
 // Checks if the applicable version marks a significant version or not
-def isSignificantVersion() {
-	def applicableVersionName = obtainApplicableVersionName()
-	def isSignificantVersion = (applicableVersionName.contains(CONST_SAFE_CHARACTER_REPLACER_FOR_DOCKER_TAG_NAME) == false && applicableVersionName.contains(CONST_UNSAFE_CHARACTER_FOR_DOCKER_TAG_NAME) == false)
+def isSignificantVersion(String versionName) {
+	def isSignificantVersion = (versionName.contains(CONST_SAFE_CHARACTER_REPLACER_FOR_DOCKER_TAG_NAME) == false && versionName.contains(CONST_UNSAFE_CHARACTER_FOR_DOCKER_TAG_NAME) == false)
 
 	return isSignificantVersion
 }
@@ -88,7 +83,6 @@ ext {
 	obtainLatestTag = this.&obtainLatestTag
 	manifestVersion = this.&manifestVersion
 	manifestNamespace = this.&manifestNamespace
-	obtainApplicableVersionName = this.&obtainApplicableVersionName
 	isSignificantVersion = this.&isSignificantVersion
 	manifestImageName = this.&manifestImageName
 }

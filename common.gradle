@@ -482,7 +482,7 @@ task publishDesignatedVersion(dependsOn: [stampDesignatedVersion,gitPush]) {
 // One version to rule them all
 task printApplicableVersion {
 	doLast {
-		def applicableVersionName = obtainApplicableVersionName()
+		def applicableVersionName = manifestVersion(false)
 
 		println "Prime version: ${applicableVersionName}"
 	}
