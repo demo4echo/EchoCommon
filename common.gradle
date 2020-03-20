@@ -81,7 +81,7 @@ project.version = originalProjectVersionObject.toString()
 // matching() and all() are "live" so any tasks declared after this line will also depend on 'printApplicableVersion'
 tasks.matching { it.name != 'printApplicableVersion' }.all {
 	it.dependsOn printApplicableVersion
-	Task task -> task.dependsOn initializer
+//	Task task -> task.dependsOn initializer
 }
 
 // Configure protobuf
