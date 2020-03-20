@@ -247,7 +247,7 @@ pipeline {
 							-Pdemo4echo.designatedTagName=${params.DESIGNATED_VERSION} \
 							-Pdemo4echo.designatedTagMessage='${params.DESIGNATED_VERSION_MESSAGE}' \
 							-Dorg.ajoberstar.grgit.auth.username=${env.GITHUB_ACCESS_TOKEN} \
-							publishDesignatedVersion"
+							publishApplicableVersion"
 					}
 
 					// Trigger downstream end to end functional testing (wait for it to end since its failure should fail this build as well)
