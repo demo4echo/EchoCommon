@@ -51,7 +51,7 @@ def manifestNamespace() {
 // Checks if the applicable version marks a significant version or not
 def isSignificantVersion(String versionName) {
 //	def isSignificantVersion = (versionName.contains(CONST_SAFE_CHARACTER_REPLACER_FOR_DOCKER_TAG_NAME) == false && versionName.contains(CONST_UNSAFE_CHARACTER_FOR_DOCKER_TAG_NAME) == false)
-	def isSignificantVersion = (versionName.contains(versionName.contains(CONST_UNSAFE_CHARACTER_FOR_DOCKER_TAG_NAME) == false)
+	def isSignificantVersion = (versionName.contains(CONST_UNSAFE_CHARACTER_FOR_DOCKER_TAG_NAME) == false)
 
 	return isSignificantVersion
 }
