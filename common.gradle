@@ -1,4 +1,5 @@
-//import org.ajoberstar.grgit.Person
+@Grab('org.ajoberstar.grgit:grgit-core:4.0.1') // version was 4.0.+
+import org.ajoberstar.grgit.Person
 
 //buildscript {
 //	repositories {
@@ -72,6 +73,7 @@ task publishVersion(dependsOn: reckonTagPush)
 // These properties must be defined after the reckon plugin is set up!
 ext.originalProjectVersionObject = project.version
 ext.productVersion = manifestVersion()
+ext.productTag = manifestVersion(false)
 
 // Pre-Defined project properties
 //project.description = 'The Echo demo product'
@@ -386,19 +388,19 @@ task manifestHelmChart(dependsOn: helmPackage) {
 // Works with org.ajoberstar.grgit plugin
 //
 
-task designatedTagCreate {
-	description = 'Tags the current head with a designated name'
+task applicableTagCreate {
+	description = 'Tags the current head with the applicable version name'
 
-	def tagName = null
+	def tagName = productTag
 	def tagMessage = null
 
 	doFirst {
-		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isEmpty() == true) {
-			throw new GradleException("Missing or Empty '${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME}' project property")
-		}
-		else {
-			tagName = project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]
-		}
+//		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isEmpty() == true) {
+//			throw new GradleException("Missing or Empty '${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME}' project property")
+//		}
+//		else {
+//			tagName = project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]
+//		}
 
 		if (project.hasProperty(CONST_DESIGNATED_TAG_MESSAGE_PROJECT_PROPERTY_NAME) == true && project.ext[CONST_DESIGNATED_TAG_MESSAGE_PROJECT_PROPERTY_NAME].trim().isEmpty() == false) {
 			tagMessage = project.ext[CONST_DESIGNATED_TAG_MESSAGE_PROJECT_PROPERTY_NAME]
@@ -413,29 +415,29 @@ task designatedTagCreate {
 			name = tagName
 			message = tagMessage
 			force = true
-//			tagger = new Person(vcsUsername,vcsUseremail)
+			tagger = new Person(vcsUsername,vcsUseremail)
 		}
 
-		println "Designated tag cretaed: ${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}"
+		println "Applicable tag cretaed: ${productTag}"
 	}
 }
 
-task designatedTagDestroy {
-	description = 'Removes designated tag name from GIT'
+task applicableTagDestroy {
+	description = 'Removes applicable tag from GIT'
 
-	doFirst {
-		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isEmpty() == true)
-		{
-			throw new GradleException("Missing or Empty '${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME}' project property")
-		}
-	}
+//	doFirst {
+//		if (project.hasProperty(CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME) == false || project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME].trim().isEmpty() == true)
+//		{
+//			throw new GradleException("Missing or Empty '${CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME}' project property")
+//		}
+//	}
 
 	doLast {
 		grgit.tag.remove {
-			names = [project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]]
+			names = [productTag]
 		}
 
-		println "Designated tag destroyed: ${project.ext[CONST_DESIGNATED_TAG_NAME_PROJECT_PROPERTY_NAME]}"
+		println "Applicable tag destroyed: ${productTag}"
 	}
 }
 
@@ -461,24 +463,15 @@ task gitPull {
 	}
 }
 
-// DesignatedVersion helpers
-task printDesignatedVersion {
-	doLast {
-		println "Designated version: ${productVersion}"
-	}
-}
-task stampDesignatedVersion(dependsOn: designatedTagCreate)
-task publishDesignatedVersion(dependsOn: [stampDesignatedVersion,gitPush]) {
-	gitPush.mustRunAfter stampDesignatedVersion
-}
-
-// One version to rule them all
+// Applicable version helpers
 task printApplicableVersion {
 	doLast {
-		def applicableVersionName = manifestVersion(false)
-
-		println "Prime version: ${applicableVersionName}"
+		println "Prime version: ${productTag}"
 	}
+}
+task stampApplicableVersion(dependsOn: applicableTagCreate)
+task publishApplicableVersion(dependsOn: [stampApplicableVersion,gitPush]) {
+	gitPush.mustRunAfter stampApplicableVersion
 }
 
 // The most recent version that exists in the VCS (last generated tag)
@@ -494,6 +487,6 @@ task printLatestVersion {
 
 // Make every other task depend on 'printApplicableVersion'
 // matching() and all() are "live" so any tasks declared after this line will also depend on 'printApplicableVersion'
-tasks.matching { it.name != 'printApplicableVersion'  && it.name != 'printLatestVersion'  && it.name != 'printDesignatedVersion' && it.name != 'printVersion' }.all {
+tasks.matching { it.name != 'printApplicableVersion'  && it.name != 'printLatestVersion'  && it.name != 'printVersion' }.all {
 	it.dependsOn printApplicableVersion
 }
