@@ -25,7 +25,8 @@ ext {
 	serviceName = service_name
 	productName = project.name
 	productRepository = "${serviceName}/${productName}"
-	productK8ShelmChartsFolder = "k8s${File.separator}helm${File.separator}charts"
+	helmChartsFolder = "${sourceSets.main}${File.separator}helm"
+//	helmChartsFolder = "k8s${File.separator}helm${File.separator}charts"
 	dockerFilePath = project.hasProperty('dockerFilePathOverride') ? "${-> dockerFilePathOverride}" : "${-> common_sub_module_name}${File.separator}Dockerfile"
 	vcsURL = grgit.remote.list()[0].url
 	vcsRevision = grgit.head().id
@@ -329,15 +330,16 @@ helm {
 //		"${productName}" {
 			chartName = productName
 			chartVersion = helmChartVersion ?: productVersion
-			sourceDir = file("${productK8ShelmChartsFolder}${File.separator}main")
-//			sourceDir = file("${productK8ShelmChartsFolder}${File.separator}${productName}")
+			sourceDir = file("${helmChartsFolder}")
+//			sourceDir = file("${helmChartsFolder}${File.separator}main")
+//			sourceDir = file("${helmChartsFolder}${File.separator}${productName}")
 		}
 	}
 
 	// The "charts" section (above) can also be defined using a pre-defined default chart named 'main'
 //	helm.charts.main.chartName = productName
 //	helm.charts.main.chartVersion = productVersion
-//	helm.charts.main.sourceDir = file("${productK8ShelmChartsFolder}${File.separator}${productName}")
+//	helm.charts.main.sourceDir = file("${helmChartsFolder}${File.separator}${productName}")
 
 	lint {
 		// enable/disable linting by default
