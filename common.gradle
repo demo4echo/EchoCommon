@@ -26,7 +26,6 @@ ext {
 	productName = project.name
 	productRepository = "${serviceName}/${productName}"
 	helmChartsFolder = "src${File.separator}main${File.separator}helm"
-//	helmChartsFolder = "k8s${File.separator}helm${File.separator}charts"
 	dockerFilePath = project.hasProperty('dockerFilePathOverride') ? "${-> dockerFilePathOverride}" : "${-> common_sub_module_name}${File.separator}Dockerfile"
 	vcsURL = grgit.remote.list()[0].url
 	vcsRevision = grgit.head().id
@@ -331,8 +330,6 @@ helm {
 			chartName = productName
 			chartVersion = helmChartVersion ?: productVersion
 			sourceDir = file("${helmChartsFolder}")
-//			sourceDir = file("${helmChartsFolder}${File.separator}main")
-//			sourceDir = file("${helmChartsFolder}${File.separator}${productName}")
 		}
 	}
 
