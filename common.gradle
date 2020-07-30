@@ -448,7 +448,7 @@ task applicableTagCreate {
 //			tagger = new Person(vcsUsername,vcsUseremail)
 		}
 
-		println "Applicable tag cretaed: ${productTag}"
+		println "Applicable tag created: ${productTag}"
 	}
 }
 
