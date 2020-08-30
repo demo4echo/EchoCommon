@@ -9,7 +9,8 @@ def obtainCurrentBranchName() {
 
 // Returns the latest tag/version from git
 def obtainLatestTag() {
-	return grgit.tag.list().last()
+//	return grgit.tag.list().last()
+	return grgit.tag.list().findAll {it.name ==~ /\d+\.\d+\.\d+.*/}.sort {it.dateTime}.last()
 }
 
 //
